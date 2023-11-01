@@ -1,0 +1,6 @@
+edu\eci\arsw\typefight\model\TypeFight.class
+edu\eci\arsw\typefight\TypeFightWebSocketConfig.class
+edu\eci\arsw\typefight\model\Player.class
+edu\eci\arsw\typefight\STOMPMessagesHandler$1.class
+edu\eci\arsw\typefight\STOMPMessagesHandler.class
+edu\eci\arsw\typefight\TypeFightApplication.class
