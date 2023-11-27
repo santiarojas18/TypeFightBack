@@ -3,6 +3,7 @@ package edu.eci.arsw.typefight;
 import edu.eci.arsw.typefight.model.Player;
 import edu.eci.arsw.typefight.model.TypeFight;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -53,7 +54,7 @@ public class STOMPMessagesHandler {
                     String playerName = player.getName();
                     if (!playerName.equals(username)) {
                         player.decreaseHealth(word.length());
-                        msgt.convertAndSend("/topic/updateHealth." + playerName, player.getHealth());
+                        msgt.convertAndSend("/topic/gameOver." + player.getName(), player.getHealth());
                     } else {
                         player.addPoints(word.length());
                     }
@@ -63,22 +64,43 @@ public class STOMPMessagesHandler {
             }
         }
 
+        msgt.convertAndSend("/topic/updateHealth", typeFight.getPlayers());
+
         if(typeFight.isThereAWinner() != null){
             msgt.convertAndSend("/topic/thereIsAWinner", typeFight.getSortedPlayers().get(0));
         }       
     }
 
-    @MessageMapping("newplayer")
-    public void handleNewPlayerEvent(String name) {
+    @MessageMapping("newplayer.{uniqueId}")
+    public void handleNewPlayerEvent(String name, @DestinationVariable String uniqueId) {
         System.out.println("Jugador añadido:" + name);
+        boolean isUsed;
         if (gameReset) {
-            Player player = new Player(name, tempTypeFight.getColorByPlayers());
-            tempTypeFight.addPlayer(player);
+            synchronized (typeFight) {
+                if (tempTypeFight.getPlayersNames().contains(name)) {
+                    isUsed = true;
+                } else {
+                    isUsed = false;
+                    Player player = new Player(name, tempTypeFight.getColorByPlayers());
+                    tempTypeFight.addPlayer(player);
+                }
+            }
         } else {
-            Player player = new Player(name, typeFight.getColorByPlayers());
-            typeFight.addPlayer(player);
+            synchronized (typeFight) {
+                if (typeFight.getPlayersNames().contains(name)) {
+                    isUsed = true;
+                } else {
+                    isUsed = false;
+                    Player player = new Player(name, typeFight.getColorByPlayers());
+                    typeFight.addPlayer(player);
+                }
+            }
+
         }
-        msgt.convertAndSend("/topic/newplayer", name);
+
+        System.out.println(typeFight.getPlayersNames());
+        msgt.convertAndSend("/topic/newplayer." + uniqueId, isUsed);
+
     }
 
     @MessageMapping("newentry")

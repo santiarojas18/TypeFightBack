@@ -11,6 +11,7 @@ public class TypeFight {
     private ArrayList<String> words;
     private String[] colors;
     private ArrayList<String> currentWords = new ArrayList<>();
+    private ArrayList<String> playersNames = new ArrayList<>();
     public static final int MAX_CURRENT_WORDS = 5; // Máximo de palabras actuales
 
     public TypeFight(){
@@ -51,6 +52,7 @@ public class TypeFight {
 
     public void addPlayer(Player player){
         players.putIfAbsent(player.getColor(), player);
+        playersNames.add(player.getName());
     }
 
     public void addPointToPlayer(String color, String word) {
@@ -104,6 +106,10 @@ public class TypeFight {
         if(currentWords.size() < MAX_CURRENT_WORDS && !currentWords.contains(word)){
             currentWords.add(word);
         }
+    }
+
+    public ArrayList<String> getPlayersNames() {
+        return playersNames;
     }
 
     public List<String> getCurrentWords() {
