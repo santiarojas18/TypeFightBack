@@ -1,17 +1,42 @@
 package edu.eci.arsw.typefight.model;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
-public class TypeFight {
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
+
+@Data
+@RedisHash("TypeFight")
+public class TypeFight implements Serializable{
+    @Id
+    @JsonProperty("id")
+    private final Integer id = 1;
+
+    @JsonProperty("winner")
     private Player winner;
-    private HashMap<String, Player> players;
+
+    @JsonProperty("players")
+    private HashMap<String, Player> players = new HashMap<>();
+
+    @JsonProperty("words")
     private ArrayList<String> words;
+
+    @JsonProperty("colors")
     private String[] colors;
+
+    @JsonProperty("currentWords")
     private ArrayList<String> currentWords = new ArrayList<>();
+
+    @JsonProperty("playerNames")
     private ArrayList<String> playersNames = new ArrayList<>();
+
+    @JsonProperty("MAX_CURRENT_WORDS")
     public static final int MAX_CURRENT_WORDS = 5; // Máximo de palabras actuales
 
     public TypeFight(){
@@ -25,7 +50,7 @@ public class TypeFight {
                 "Té", "Uña", "Vaso", "Whisky", "Xilografía", "Yoyo", "Zoológico", "Alabanza", "Beso", "Caramelo",
                 "Dibujo", "Estrella", "Flauta", "Guitarra", "Hada", "Iglesia", "Juguete", "Kilogramo", "Lobo", "Mar",
                 "Nido", "Océano", "Pantalón", "Quirófano", "Reloj", "Sapo", "Trenza", "Unicornio", "Vela", "Zapato"));
-        players = new HashMap<>();
+        //players = new HashMap<>();
         colors = new String[] {"Rojo", "Amarillo", "Azul", "Verde", "Naranja"};
 
         //Mock
@@ -88,8 +113,8 @@ public class TypeFight {
 
     public List<Player> getSortedPlayers() {
         List<Player> playerList = new ArrayList<>(players.values());
-        playerList.sort(Comparator.comparing(Player::getPoints, (points1, points2) -> points2.get() - points1.get())
-                .thenComparing(Player::getHealth, (life1, life2) -> life2.get() - life1.get())
+        playerList.sort(Comparator.comparing(Player::getPoints, (points1, points2) -> points2 - points1)
+                .thenComparing(Player::getHealth, (life1, life2) -> life2 - life1)
         );
         return playerList;
     }
@@ -122,5 +147,9 @@ public class TypeFight {
 
     public void removeCurrentWord(String word){
         currentWords.remove(word);
+    }
+
+    public void setPlayers(HashMap<String, Player> players) {
+        this.players = players;
     }
 }
