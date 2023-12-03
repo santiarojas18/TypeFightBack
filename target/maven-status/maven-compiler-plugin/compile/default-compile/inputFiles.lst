@@ -1,11 +1,11 @@
-C:\Users\santi\OneDrive\Escritorio\Santiago\ARSW\TypeFightBack\src\main\java\edu\eci\arsw\typefight\repository\TypeFightRepository.java
-C:\Users\santi\OneDrive\Escritorio\Santiago\ARSW\TypeFightBack\src\main\java\edu\eci\arsw\typefight\model\Player.java
-C:\Users\santi\OneDrive\Escritorio\Santiago\ARSW\TypeFightBack\src\main\java\edu\eci\arsw\typefight\model\TypeFight.java
-C:\Users\santi\OneDrive\Escritorio\Santiago\ARSW\TypeFightBack\src\main\java\edu\eci\arsw\typefight\config\RedisConfiguration.java
-C:\Users\santi\OneDrive\Escritorio\Santiago\ARSW\TypeFightBack\src\main\java\edu\eci\arsw\typefight\repository\PlayerRepository.java
-C:\Users\santi\OneDrive\Escritorio\Santiago\ARSW\TypeFightBack\src\main\java\edu\eci\arsw\typefight\service\PlayerService.java
-C:\Users\santi\OneDrive\Escritorio\Santiago\ARSW\TypeFightBack\src\main\java\edu\eci\arsw\typefight\config\TypeFightDeserializer.java
-C:\Users\santi\OneDrive\Escritorio\Santiago\ARSW\TypeFightBack\src\main\java\edu\eci\arsw\typefight\TypeFightApplication.java
-C:\Users\santi\OneDrive\Escritorio\Santiago\ARSW\TypeFightBack\src\main\java\edu\eci\arsw\typefight\service\CacheService.java
-C:\Users\santi\OneDrive\Escritorio\Santiago\ARSW\TypeFightBack\src\main\java\edu\eci\arsw\typefight\STOMPMessagesHandler.java
-C:\Users\santi\OneDrive\Escritorio\Santiago\ARSW\TypeFightBack\src\main\java\edu\eci\arsw\typefight\TypeFightWebSocketConfig.java
+C:\Users\andre\OneDrive\Documentos\ARSW\Proyecto\Tercer Corte\TypeFightBack\src\main\java\edu\eci\arsw\typefight\config\TypeFightDeserializer.java
+C:\Users\andre\OneDrive\Documentos\ARSW\Proyecto\Tercer Corte\TypeFightBack\src\main\java\edu\eci\arsw\typefight\service\CacheService.java
+C:\Users\andre\OneDrive\Documentos\ARSW\Proyecto\Tercer Corte\TypeFightBack\src\main\java\edu\eci\arsw\typefight\model\TypeFight.java
+C:\Users\andre\OneDrive\Documentos\ARSW\Proyecto\Tercer Corte\TypeFightBack\src\main\java\edu\eci\arsw\typefight\repository\PlayerRepository.java
+C:\Users\andre\OneDrive\Documentos\ARSW\Proyecto\Tercer Corte\TypeFightBack\src\main\java\edu\eci\arsw\typefight\STOMPMessagesHandler.java
+C:\Users\andre\OneDrive\Documentos\ARSW\Proyecto\Tercer Corte\TypeFightBack\src\main\java\edu\eci\arsw\typefight\TypeFightWebSocketConfig.java
+C:\Users\andre\OneDrive\Documentos\ARSW\Proyecto\Tercer Corte\TypeFightBack\src\main\java\edu\eci\arsw\typefight\service\PlayerService.java
+C:\Users\andre\OneDrive\Documentos\ARSW\Proyecto\Tercer Corte\TypeFightBack\src\main\java\edu\eci\arsw\typefight\TypeFightApplication.java
+C:\Users\andre\OneDrive\Documentos\ARSW\Proyecto\Tercer Corte\TypeFightBack\src\main\java\edu\eci\arsw\typefight\config\RedisConfiguration.java
+C:\Users\andre\OneDrive\Documentos\ARSW\Proyecto\Tercer Corte\TypeFightBack\src\main\java\edu\eci\arsw\typefight\repository\TypeFightRepository.java
+C:\Users\andre\OneDrive\Documentos\ARSW\Proyecto\Tercer Corte\TypeFightBack\src\main\java\edu\eci\arsw\typefight\model\Player.java
