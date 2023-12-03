@@ -36,6 +36,13 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+          
+      - name: cache target
+        uses: actions/cache@v3
+        with:
+          path: |
+            target
+          key: cache-v1-${{ hashFiles('**/src', '**/pom.xml', '**/.github') }}
 
       - name: Build and analyze
         env:
@@ -43,12 +50,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=santiarojas18_TypeFightBack -Pcoverage
 
-      - name: cache target
-        uses: actions/cache@v3
-        with:
-          path: |
-            target
-          key: cache-v1-${{ hashFiles('**/src', '**/pom.xml', '**/.github') }}
+
 
   deploy:
     runs-on: windows-latest
