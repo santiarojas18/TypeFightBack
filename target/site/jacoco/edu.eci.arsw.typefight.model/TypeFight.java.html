@@ -14,42 +14,42 @@ import org.springframework.data.redis.core.RedisHash;
 <span class="pc bnc" id="L14" title="All 56 branches missed.">@Data</span>
 @RedisHash(&quot;TypeFight&quot;)
 public class TypeFight implements Serializable{
-<span class="fc" id="L17">    @Id</span>
+    @Id
     @JsonProperty(&quot;id&quot;)
-<span class="pc" id="L19">    private final Integer id = 1;</span>
+<span class="fc" id="L19">    private final Integer id = 1;</span>
 
     @JsonProperty(&quot;winner&quot;)
-<span class="nc" id="L22">    private Player winner;</span>
+    private Player winner;
 
-<span class="fc" id="L24">    @JsonProperty(&quot;players&quot;)</span>
-    private HashMap&lt;String, Player&gt; players = new HashMap&lt;&gt;();
+    @JsonProperty(&quot;players&quot;)
+<span class="fc" id="L25">    private HashMap&lt;String, Player&gt; players = new HashMap&lt;&gt;();</span>
 
     @JsonProperty(&quot;words&quot;)
-<span class="nc" id="L28">    private ArrayList&lt;String&gt; words;</span>
+    private ArrayList&lt;String&gt; words;
 
     @JsonProperty(&quot;colors&quot;)
-<span class="nc" id="L31">    private String[] colors;</span>
+    private String[] colors;
 
-<span class="fc" id="L33">    @JsonProperty(&quot;currentWords&quot;)</span>
-    private ArrayList&lt;String&gt; currentWords = new ArrayList&lt;&gt;();
+    @JsonProperty(&quot;currentWords&quot;)
+<span class="fc" id="L34">    private ArrayList&lt;String&gt; currentWords = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L36">    @JsonProperty(&quot;playerNames&quot;)</span>
-    private ArrayList&lt;String&gt; playersNames = new ArrayList&lt;&gt;();
+    @JsonProperty(&quot;playerNames&quot;)
+<span class="fc" id="L37">    private ArrayList&lt;String&gt; playersNames = new ArrayList&lt;&gt;();</span>
 
     @JsonProperty(&quot;MAX_CURRENT_WORDS&quot;)
     public static final int MAX_CURRENT_WORDS = 5; // Máximo de palabras actuales
 
 <span class="fc" id="L42">    public TypeFight(){</span>
 <span class="fc" id="L43">        words = new ArrayList&lt;&gt;(Arrays.asList(&quot;Abrir&quot;, &quot;Búsqueda&quot;, &quot;Cautivar&quot;, &quot;Difuso&quot;, &quot;Esencia&quot;, &quot;Fabuloso&quot;, &quot;Galaxia&quot;, &quot;Habilidad&quot;, &quot;Inquietud&quot;, &quot;Júbilo&quot;,</span>
-                &quot;Kilómetro&quot;, &quot;Luminoso&quot;, &quot;Mariposa&quot;, &quot;Navegante&quot;, &quot;Ocasión&quot;, &quot;Palabra&quot;, &quot;Química&quot;, &quot;Razonar&quot;, &quot;Silencio&quot;, &quot;Tardanza&quot;,
-                &quot;Unicornio&quot;, &quot;Vehículo&quot;, &quot;Wéstern&quot;, &quot;Xenofobia&quot;, &quot;Yacimiento&quot;, &quot;Zigzag&quot;, &quot;Amarillo&quot;, &quot;Búho&quot;, &quot;Cuaderno&quot;, &quot;Dama&quot;,
-                &quot;Elegancia&quot;, &quot;Fuego&quot;, &quot;Gorrión&quot;, &quot;Hombre&quot;, &quot;Isla&quot;, &quot;Jardín&quot;, &quot;Kiosco&quot;, &quot;Lámpara&quot;, &quot;Mañana&quot;, &quot;Nube&quot;,
-                &quot;Otoño&quot;, &quot;Pájaro&quot;, &quot;Querido&quot;, &quot;Río&quot;, &quot;Sol&quot;, &quot;Tren&quot;, &quot;Uva&quot;, &quot;Viento&quot;, &quot;Xilófono&quot;, &quot;Yate&quot;,
-                &quot;Zanahoria&quot;, &quot;Aluminio&quot;, &quot;Barco&quot;, &quot;Cielo&quot;, &quot;Dientes&quot;, &quot;Escritura&quot;, &quot;Fábrica&quot;, &quot;Galleta&quot;, &quot;Hielo&quot;, &quot;Invierno&quot;,
-                &quot;Jirafa&quot;, &quot;Koala&quot;, &quot;Lápiz&quot;, &quot;Manzana&quot;, &quot;Noche&quot;, &quot;Orquídea&quot;, &quot;Pintura&quot;, &quot;Queso&quot;, &quot;Ratón&quot;, &quot;Silla&quot;,
-                &quot;Té&quot;, &quot;Uña&quot;, &quot;Vaso&quot;, &quot;Whisky&quot;, &quot;Xilografía&quot;, &quot;Yoyo&quot;, &quot;Zoológico&quot;, &quot;Alabanza&quot;, &quot;Beso&quot;, &quot;Caramelo&quot;,
-                &quot;Dibujo&quot;, &quot;Estrella&quot;, &quot;Flauta&quot;, &quot;Guitarra&quot;, &quot;Hada&quot;, &quot;Iglesia&quot;, &quot;Juguete&quot;, &quot;Kilogramo&quot;, &quot;Lobo&quot;, &quot;Mar&quot;,
-                &quot;Nido&quot;, &quot;Océano&quot;, &quot;Pantalón&quot;, &quot;Quirófano&quot;, &quot;Reloj&quot;, &quot;Sapo&quot;, &quot;Trenza&quot;, &quot;Unicornio&quot;, &quot;Vela&quot;, &quot;Zapato&quot;));
+<span class="fc" id="L44">                &quot;Kilómetro&quot;, &quot;Luminoso&quot;, &quot;Mariposa&quot;, &quot;Navegante&quot;, &quot;Ocasión&quot;, &quot;Palabra&quot;, &quot;Química&quot;, &quot;Razonar&quot;, &quot;Silencio&quot;, &quot;Tardanza&quot;,</span>
+<span class="fc" id="L45">                &quot;Unicornio&quot;, &quot;Vehículo&quot;, &quot;Wéstern&quot;, &quot;Xenofobia&quot;, &quot;Yacimiento&quot;, &quot;Zigzag&quot;, &quot;Amarillo&quot;, &quot;Búho&quot;, &quot;Cuaderno&quot;, &quot;Dama&quot;,</span>
+<span class="fc" id="L46">                &quot;Elegancia&quot;, &quot;Fuego&quot;, &quot;Gorrión&quot;, &quot;Hombre&quot;, &quot;Isla&quot;, &quot;Jardín&quot;, &quot;Kiosco&quot;, &quot;Lámpara&quot;, &quot;Mañana&quot;, &quot;Nube&quot;,</span>
+<span class="fc" id="L47">                &quot;Otoño&quot;, &quot;Pájaro&quot;, &quot;Querido&quot;, &quot;Río&quot;, &quot;Sol&quot;, &quot;Tren&quot;, &quot;Uva&quot;, &quot;Viento&quot;, &quot;Xilófono&quot;, &quot;Yate&quot;,</span>
+<span class="fc" id="L48">                &quot;Zanahoria&quot;, &quot;Aluminio&quot;, &quot;Barco&quot;, &quot;Cielo&quot;, &quot;Dientes&quot;, &quot;Escritura&quot;, &quot;Fábrica&quot;, &quot;Galleta&quot;, &quot;Hielo&quot;, &quot;Invierno&quot;,</span>
+<span class="fc" id="L49">                &quot;Jirafa&quot;, &quot;Koala&quot;, &quot;Lápiz&quot;, &quot;Manzana&quot;, &quot;Noche&quot;, &quot;Orquídea&quot;, &quot;Pintura&quot;, &quot;Queso&quot;, &quot;Ratón&quot;, &quot;Silla&quot;,</span>
+<span class="fc" id="L50">                &quot;Té&quot;, &quot;Uña&quot;, &quot;Vaso&quot;, &quot;Whisky&quot;, &quot;Xilografía&quot;, &quot;Yoyo&quot;, &quot;Zoológico&quot;, &quot;Alabanza&quot;, &quot;Beso&quot;, &quot;Caramelo&quot;,</span>
+<span class="fc" id="L51">                &quot;Dibujo&quot;, &quot;Estrella&quot;, &quot;Flauta&quot;, &quot;Guitarra&quot;, &quot;Hada&quot;, &quot;Iglesia&quot;, &quot;Juguete&quot;, &quot;Kilogramo&quot;, &quot;Lobo&quot;, &quot;Mar&quot;,</span>
+<span class="fc" id="L52">                &quot;Nido&quot;, &quot;Océano&quot;, &quot;Pantalón&quot;, &quot;Quirófano&quot;, &quot;Reloj&quot;, &quot;Sapo&quot;, &quot;Trenza&quot;, &quot;Unicornio&quot;, &quot;Vela&quot;, &quot;Zapato&quot;));</span>
         //players = new HashMap&lt;&gt;();
 <span class="fc" id="L54">        colors = new String[] {&quot;Rojo&quot;, &quot;Amarillo&quot;, &quot;Azul&quot;, &quot;Verde&quot;, &quot;Naranja&quot;};</span>
 
@@ -100,7 +100,7 @@ public class TypeFight implements Serializable{
 <span class="nc" id="L100">                alive++;</span>
 <span class="nc" id="L101">                winner = player;</span>
             }
-<span class="nc" id="L103">        }</span>
+        }
 <span class="nc bnc" id="L104" title="All 2 branches missed.">        if (alive != 1){</span>
 <span class="nc" id="L105">            winner = null;</span>
         }
@@ -122,9 +122,9 @@ public class TypeFight implements Serializable{
     @Override
     public String toString() {
 <span class="nc" id="L124">        return &quot;TypeFight{&quot; +</span>
-                &quot;winner=&quot; + winner +
-                &quot;, players=&quot; + players +
-                '}';
+<span class="nc" id="L125">                &quot;winner=&quot; + winner +</span>
+<span class="nc" id="L126">                &quot;, players=&quot; + players +</span>
+<span class="nc" id="L127">                '}';</span>
     }
 
     public void addRandomWord(String word) {

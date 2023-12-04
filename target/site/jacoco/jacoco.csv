@@ -1,11 +1,11 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-TypeFight,edu.eci.arsw.typefight,STOMPMessagesHandler,532,23,33,1,103,6,24,2,7,2
+TypeFight,edu.eci.arsw.typefight,STOMPMessagesHandler,523,20,33,1,102,6,24,2,7,2
 TypeFight,edu.eci.arsw.typefight,TypeFightApplication,5,3,0,0,2,1,1,1,1,1
 TypeFight,edu.eci.arsw.typefight,STOMPMessagesHandler.new TypeReference() {...},6,0,0,0,1,0,1,0,1,0
 TypeFight,edu.eci.arsw.typefight,TypeFightWebSocketConfig,0,47,0,0,0,9,0,3,0,3
-TypeFight,edu.eci.arsw.typefight.model,TypeFight,428,469,66,0,38,13,59,5,26,5
-TypeFight,edu.eci.arsw.typefight.model,Player,314,0,44,0,38,0,40,0,18,0
+TypeFight,edu.eci.arsw.typefight.model,TypeFight,427,469,66,0,37,21,59,5,26,5
+TypeFight,edu.eci.arsw.typefight.model,Player,309,0,44,0,44,0,40,0,18,0
 TypeFight,edu.eci.arsw.typefight.config,RedisConfiguration,0,101,0,0,0,25,0,4,0,4
-TypeFight,edu.eci.arsw.typefight.config,TypeFightDeserializer,58,96,8,10,10,24,8,4,0,3
+TypeFight,edu.eci.arsw.typefight.config,TypeFightDeserializer,56,98,8,10,8,23,8,4,0,3
 TypeFight,edu.eci.arsw.typefight.service,PlayerService,12,3,0,0,2,1,2,1,2,1
 TypeFight,edu.eci.arsw.typefight.service,CacheService,36,29,2,2,10,9,4,3,2,3

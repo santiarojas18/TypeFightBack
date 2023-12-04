@@ -75,15 +75,15 @@ public class STOMPMessagesHandler {
 <span class="nc bnc" id="L75" title="All 2 branches missed.">                    if (!playerName.equals(username)) {</span>
 <span class="nc" id="L76">                        player.decreaseHealth(word.length());</span>
 <span class="nc" id="L77">                        msgt.convertAndSend(&quot;/topic/gameOver.&quot; + player.getName(), player.getHealth());</span>
-                    } else {
+<span class="nc" id="L78">                    } else {</span>
 <span class="nc" id="L79">                        player.addPoints(word.length());</span>
                     }
-<span class="nc" id="L81">                }</span>
+                }
 <span class="nc" id="L82">                typeFight.removeCurrentWord(word);</span>
 <span class="nc" id="L83">                cacheService.saveSharedTypeFight(typeFight);</span>
 <span class="nc" id="L84">                msgt.convertAndSend(&quot;/topic/catchword&quot;, word);</span>
             }
-<span class="nc" id="L86">        }</span>
+        }
 
 <span class="nc" id="L88">        msgt.convertAndSend(&quot;/topic/updateHealth&quot;, typeFight.getPlayers());</span>
 
@@ -101,27 +101,27 @@ public class STOMPMessagesHandler {
 <span class="nc" id="L101">                tempTypeFight = cacheService.loadOrCreateTempTypeFight();</span>
 <span class="nc bnc" id="L102" title="All 2 branches missed.">                if (tempTypeFight.getPlayersNames().contains(name)) {</span>
 <span class="nc" id="L103">                    isUsed = true;</span>
-                } else {
+<span class="nc" id="L104">                } else {</span>
 <span class="nc" id="L105">                    isUsed = false;</span>
 <span class="nc" id="L106">                    Player player = new Player(name, tempTypeFight.getColorByPlayers());</span>
 <span class="nc" id="L107">                    tempTypeFight.addPlayer(player);</span>
 <span class="nc" id="L108">                    playerService.addPlayer(player);</span>
 <span class="nc" id="L109">                    cacheService.saveSharedTempTypeFight(tempTypeFight);</span>
                 }
-<span class="nc" id="L111">            }</span>
+            }
         } else {
 <span class="nc" id="L113">            synchronized (typeFight) {</span>
 <span class="nc" id="L114">                typeFight = cacheService.loadOrCreateTypeFight();</span>
 <span class="nc bnc" id="L115" title="All 2 branches missed.">                if (typeFight.getPlayersNames().contains(name)) {</span>
 <span class="nc" id="L116">                    isUsed = true;</span>
-                } else {
+<span class="nc" id="L117">                } else {</span>
 <span class="nc" id="L118">                    isUsed = false;</span>
 <span class="nc" id="L119">                    Player player = new Player(name, typeFight.getColorByPlayers());</span>
 <span class="nc" id="L120">                    playerService.addPlayer(player);</span>
 <span class="nc" id="L121">                    typeFight.addPlayer(player);</span>
 <span class="nc" id="L122">                    cacheService.saveSharedTypeFight(typeFight);</span>
                 }   
-<span class="nc" id="L124">            }</span>
+            }
 
         }
 <span class="nc" id="L127">        System.out.println(&quot;Jugadore agregados después de volver a meter al redis: &quot; + typeFight.getPlayers());</span>
