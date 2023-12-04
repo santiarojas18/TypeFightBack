@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RedisConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TypeFight</a> &gt; <a href="index.source.html" class="el_package">edu.eci.arsw.typefight.config</a> &gt; <span class="el_source">RedisConfiguration.java</span></div><h1>RedisConfiguration.java</h1><pre class="source lang-java linenums">package edu.eci.arsw.typefight.config;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import edu.eci.arsw.typefight.model.TypeFight;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericToStringSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+import java.io.Serializable;
+
+@Configuration
+<span class="fc" id="L23">public class RedisConfiguration {</span>
+
+    @Value(&quot;${spring.redis.host}&quot;)
+    private String hostName;
+    @Value(&quot;${spring.redis.port}&quot;)
+    private int port;
+    @Value(&quot;${spring.redis.ssl}&quot;)
+    private boolean ssl;
+    @Value(&quot;${spring.redis.password}&quot;)
+    private String accessKey;
+
+    @Bean
+    public JedisConnectionFactory redisConnectionFactory() {
+<span class="fc" id="L36">        JedisConnectionFactory factory = new JedisConnectionFactory();</span>
+<span class="fc" id="L37">        factory.setHostName(hostName);</span>
+<span class="fc" id="L38">        factory.setPort(port);</span>
+<span class="fc" id="L39">        factory.setPassword(accessKey);</span>
+<span class="fc" id="L40">        factory.setUsePool(true);</span>
+
+<span class="fc" id="L42">        return factory;</span>
+    }
+
+    @Bean
+    public RedisTemplate&lt;String, TypeFight&gt; redisTemplate(RedisConnectionFactory connectionFactory) {
+<span class="fc" id="L47">        RedisTemplate&lt;String, TypeFight&gt; redisTemplate = new RedisTemplate&lt;&gt;();</span>
+<span class="fc" id="L48">        redisTemplate.setConnectionFactory(connectionFactory);</span>
+<span class="fc" id="L49">        redisTemplate.setKeySerializer(new StringRedisSerializer());</span>
+
+<span class="fc" id="L51">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="fc" id="L52">        objectMapper.registerModule(new SimpleModule().addDeserializer(TypeFight.class, new TypeFightDeserializer()));</span>
+
+        // Configurar el serializer para TypeFight
+<span class="fc" id="L55">        Jackson2JsonRedisSerializer&lt;TypeFight&gt; serializer = new Jackson2JsonRedisSerializer&lt;&gt;(TypeFight.class);</span>
+<span class="fc" id="L56">        serializer.setObjectMapper(objectMapper);</span>
+
+<span class="fc" id="L58">        redisTemplate.setValueSerializer(serializer);</span>
+
+<span class="fc" id="L60">        return redisTemplate;</span>
+    }
+
+    @Bean
+    public JedisPool getConfig() {
+<span class="fc" id="L65">        JedisPoolConfig config =new JedisPoolConfig();</span>
+<span class="fc" id="L66">        JedisPool jedisPool = new JedisPool();</span>
+<span class="fc" id="L67">        config.setMaxTotal(100);</span>
+<span class="fc" id="L68">        config.setMaxIdle(200);</span>
+<span class="fc" id="L69">        config.setMinIdle(50);</span>
+<span class="fc" id="L70">        config.setMaxWaitMillis(30000);</span>
+<span class="fc" id="L71">        config.setTestOnBorrow(true);</span>
+<span class="fc" id="L72">        jedisPool = new JedisPool(config, hostName, port,300000,accessKey);</span>
+<span class="fc" id="L73">        return jedisPool;</span>
+}
+
+ }
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

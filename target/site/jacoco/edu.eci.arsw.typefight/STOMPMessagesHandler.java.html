@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>STOMPMessagesHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TypeFight</a> &gt; <a href="index.source.html" class="el_package">edu.eci.arsw.typefight</a> &gt; <span class="el_source">STOMPMessagesHandler.java</span></div><h1>STOMPMessagesHandler.java</h1><pre class="source lang-java linenums">package edu.eci.arsw.typefight;
+
+import edu.eci.arsw.typefight.model.Player;
+import edu.eci.arsw.typefight.model.TypeFight;
+import edu.eci.arsw.typefight.repository.PlayerRepository;
+
+import edu.eci.arsw.typefight.service.PlayerService;
+import edu.eci.arsw.typefight.service.CacheService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Controller;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+@Controller
+public class STOMPMessagesHandler {
+
+    @Autowired
+    SimpMessagingTemplate msgt;
+
+    @Autowired
+    PlayerService playerService;
+
+    @Lazy
+    @Autowired
+    CacheService cacheService;
+    
+    TypeFight typeFight, tempTypeFight;
+    int goToPlay;
+    boolean gameReset;
+
+<span class="fc" id="L43">    public STOMPMessagesHandler() {</span>
+<span class="fc" id="L44">        goToPlay = 0;</span>
+<span class="fc" id="L45">        gameReset = false;</span>
+<span class="fc" id="L46">    }</span>
+
+    @Scheduled(fixedRate = 1000)
+    public void getInitialWord() {
+        //System.out.println(&quot;-----Antes de agregar palabras-----: &quot; + typeFightService.getTypeFightById(1).getCurrentWords());
+<span class="fc" id="L51">        typeFight = cacheService.loadOrCreateTypeFight();</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if(typeFight.getCurrentWords().size() &lt; typeFight.MAX_CURRENT_WORDS){</span>
+<span class="nc" id="L53">            String currentWord = typeFight.getRandomWord(); // Obtén la palabra actual desde tu modelo TypeFight</span>
+<span class="nc" id="L54">            typeFight.addRandomWord(currentWord);</span>
+        }
+<span class="nc" id="L56">        cacheService.saveSharedTypeFight(typeFight);</span>
+        //System.out.println(&quot;-------Después de agregar palabras-------:&quot; + typeFightService.getTypeFightById(1).getCurrentWords());
+<span class="nc" id="L58">        msgt.convertAndSend(&quot;/topic/showCurrentWord&quot;, typeFight.getCurrentWords()); // Envía la palabra actual a todos los jugadores.</span>
+<span class="nc" id="L59">    }</span>
+
+    @MessageMapping(&quot;catchword&quot;)
+    public void handleWordEvent(String message) throws Exception {
+
+<span class="nc" id="L64">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="nc" id="L65">        Map&lt;String, String&gt; messageMap = objectMapper.readValue(message, new TypeReference&lt;Map&lt;String,String&gt;&gt;() {});</span>
+
+<span class="nc" id="L67">        String username = messageMap.get(&quot;username&quot;);</span>
+<span class="nc" id="L68">        String word = messageMap.get(&quot;writtenWord&quot;);</span>
+<span class="nc" id="L69">        synchronized (typeFight){</span>
+<span class="nc" id="L70">            typeFight = cacheService.loadOrCreateTypeFight();</span>
+<span class="nc" id="L71">            List&lt;String&gt; currentWords = typeFight.getCurrentWords();</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            if (currentWords.contains(word)) {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">                for (Player player : typeFight.getPlayers()) {</span>
+<span class="nc" id="L74">                    String playerName = player.getName();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">                    if (!playerName.equals(username)) {</span>
+<span class="nc" id="L76">                        player.decreaseHealth(word.length());</span>
+<span class="nc" id="L77">                        msgt.convertAndSend(&quot;/topic/gameOver.&quot; + player.getName(), player.getHealth());</span>
+                    } else {
+<span class="nc" id="L79">                        player.addPoints(word.length());</span>
+                    }
+<span class="nc" id="L81">                }</span>
+<span class="nc" id="L82">                typeFight.removeCurrentWord(word);</span>
+<span class="nc" id="L83">                cacheService.saveSharedTypeFight(typeFight);</span>
+<span class="nc" id="L84">                msgt.convertAndSend(&quot;/topic/catchword&quot;, word);</span>
+            }
+<span class="nc" id="L86">        }</span>
+
+<span class="nc" id="L88">        msgt.convertAndSend(&quot;/topic/updateHealth&quot;, typeFight.getPlayers());</span>
+
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if(typeFight.isThereAWinner() != null){</span>
+<span class="nc" id="L91">            msgt.convertAndSend(&quot;/topic/thereIsAWinner&quot;, typeFight.getSortedPlayers().get(0));</span>
+        }       
+<span class="nc" id="L93">    }</span>
+
+    @MessageMapping(&quot;newplayer.{uniqueId}&quot;)
+    public void handleNewPlayerEvent(String name, @DestinationVariable String uniqueId) {
+<span class="nc" id="L97">        System.out.println(&quot;Jugador añadido:&quot; + name);</span>
+        boolean isUsed;
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (gameReset) {</span>
+<span class="nc" id="L100">            synchronized (typeFight) {</span>
+<span class="nc" id="L101">                tempTypeFight = cacheService.loadOrCreateTempTypeFight();</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">                if (tempTypeFight.getPlayersNames().contains(name)) {</span>
+<span class="nc" id="L103">                    isUsed = true;</span>
+                } else {
+<span class="nc" id="L105">                    isUsed = false;</span>
+<span class="nc" id="L106">                    Player player = new Player(name, tempTypeFight.getColorByPlayers());</span>
+<span class="nc" id="L107">                    tempTypeFight.addPlayer(player);</span>
+<span class="nc" id="L108">                    playerService.addPlayer(player);</span>
+<span class="nc" id="L109">                    cacheService.saveSharedTempTypeFight(tempTypeFight);</span>
+                }
+<span class="nc" id="L111">            }</span>
+        } else {
+<span class="nc" id="L113">            synchronized (typeFight) {</span>
+<span class="nc" id="L114">                typeFight = cacheService.loadOrCreateTypeFight();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">                if (typeFight.getPlayersNames().contains(name)) {</span>
+<span class="nc" id="L116">                    isUsed = true;</span>
+                } else {
+<span class="nc" id="L118">                    isUsed = false;</span>
+<span class="nc" id="L119">                    Player player = new Player(name, typeFight.getColorByPlayers());</span>
+<span class="nc" id="L120">                    playerService.addPlayer(player);</span>
+<span class="nc" id="L121">                    typeFight.addPlayer(player);</span>
+<span class="nc" id="L122">                    cacheService.saveSharedTypeFight(typeFight);</span>
+                }   
+<span class="nc" id="L124">            }</span>
+
+        }
+<span class="nc" id="L127">        System.out.println(&quot;Jugadore agregados después de volver a meter al redis: &quot; + typeFight.getPlayers());</span>
+<span class="nc" id="L128">        System.out.println(&quot;type:&quot; + typeFight);</span>
+<span class="nc" id="L129">        msgt.convertAndSend(&quot;/topic/newplayer.&quot; + uniqueId, isUsed);</span>
+
+<span class="nc" id="L131">    }</span>
+
+    @MessageMapping(&quot;newentry&quot;)
+    public void handleNewEntry () {
+<span class="nc" id="L135">        System.out.println(&quot;Entrada registrada&quot;);</span>
+<span class="nc" id="L136">        System.out.println(&quot;Jugadores del type: &quot; + typeFight.getPlayers());</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">        if (gameReset){</span>
+<span class="nc" id="L138">            tempTypeFight = cacheService.loadOrCreateTempTypeFight();</span>
+<span class="nc" id="L139">            msgt.convertAndSend(&quot;/topic/newentry&quot;, tempTypeFight.getPlayers());</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">            if (tempTypeFight.getAmountOfPlayers() &gt;= 2) {</span>
+<span class="nc" id="L141">                msgt.convertAndSend(&quot;/topic/readytoplay&quot;, true);</span>
+            }
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        } else if (!gameReset) {</span>
+<span class="nc" id="L144">            typeFight = cacheService.loadOrCreateTypeFight();</span>
+<span class="nc" id="L145">            msgt.convertAndSend(&quot;/topic/newentry&quot;, typeFight.getPlayers());</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">            if (typeFight.getAmountOfPlayers() &gt;= 2){</span>
+<span class="nc" id="L147">                msgt.convertAndSend(&quot;/topic/readytoplay&quot;, true);</span>
+            }
+        }
+<span class="nc" id="L150">    }</span>
+
+    @MessageMapping(&quot;gotoplay&quot;)
+    public void handleGoToPlay () {
+<span class="nc" id="L154">        System.out.println(&quot;Jugador quiere jugar!!&quot;);</span>
+<span class="nc" id="L155">        goToPlay++;</span>
+<span class="nc" id="L156">        System.out.println(goToPlay);</span>
+<span class="nc" id="L157">        System.out.println(gameReset);</span>
+<span class="nc" id="L158">        tempTypeFight = cacheService.loadOrCreateTempTypeFight();</span>
+<span class="nc" id="L159">        typeFight = cacheService.loadOrCreateTypeFight();</span>
+<span class="nc bnc" id="L160" title="All 4 branches missed.">        if (gameReset &amp;&amp; goToPlay == tempTypeFight.getPlayers().size()) {</span>
+<span class="nc" id="L161">            typeFight = tempTypeFight;</span>
+<span class="nc" id="L162">            cacheService.saveSharedTypeFight(typeFight);</span>
+<span class="nc" id="L163">            gameReset = false;</span>
+<span class="nc" id="L164">            System.out.println(&quot;Ir a jugar!!&quot;);</span>
+<span class="nc" id="L165">            msgt.convertAndSend(&quot;/topic/gotoplay&quot;, true);</span>
+<span class="nc" id="L166">            goToPlay = 0;</span>
+
+<span class="nc bnc" id="L168" title="All 4 branches missed.">        } else if (!gameReset &amp;&amp; goToPlay == typeFight.getPlayers().size()) {</span>
+<span class="nc" id="L169">            System.out.println(&quot;Ir a jugar!!&quot;);</span>
+<span class="nc" id="L170">            msgt.convertAndSend(&quot;/topic/gotoplay&quot;, true);</span>
+<span class="nc" id="L171">            goToPlay = 0;</span>
+        }
+<span class="nc" id="L173">    }</span>
+
+    @MessageMapping(&quot;showWinner&quot;)
+    public void handleShowWinner () {
+<span class="nc" id="L177">        typeFight = cacheService.loadOrCreateTypeFight();</span>
+<span class="nc" id="L178">        System.out.println(&quot;Ganador: &quot; +  typeFight.getSortedPlayers().get(0));</span>
+<span class="nc" id="L179">        msgt.convertAndSend(&quot;/topic/showWinner&quot;, typeFight.getSortedPlayers());</span>
+<span class="nc" id="L180">    }</span>
+
+    @MessageMapping(&quot;playAgain&quot;)
+    public void handlePlayAgain (String name) {
+<span class="nc" id="L184">        System.out.println(&quot;Jugador: &quot; + name + &quot; quiere jugar de nuevo!&quot;);</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">        if (!gameReset) {</span>
+<span class="nc" id="L186">            gameReset = true;</span>
+<span class="nc" id="L187">            tempTypeFight = new TypeFight();</span>
+<span class="nc" id="L188">            System.out.println(&quot;Reiniciado&quot;);</span>
+        }
+<span class="nc" id="L190">        Player player = new Player(name, tempTypeFight.getColorByPlayers());</span>
+<span class="nc" id="L191">        tempTypeFight.addPlayer(player);</span>
+<span class="nc" id="L192">        cacheService.saveSharedTempTypeFight(tempTypeFight);</span>
+<span class="nc" id="L193">        msgt.convertAndSend(&quot;/topic/playAgain&quot;, name);</span>
+<span class="nc" id="L194">    }</span>
+
+    @MessageMapping(&quot;newentrygame&quot;)
+    public void handleNewEntryGame () {
+<span class="nc" id="L198">        System.out.println(&quot;Entrada registrada&quot;);</span>
+<span class="nc" id="L199">        typeFight = cacheService.loadOrCreateTypeFight();</span>
+<span class="nc" id="L200">        msgt.convertAndSend(&quot;/topic/newentrygame&quot;, typeFight.getPlayers());</span>
+<span class="nc" id="L201">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
