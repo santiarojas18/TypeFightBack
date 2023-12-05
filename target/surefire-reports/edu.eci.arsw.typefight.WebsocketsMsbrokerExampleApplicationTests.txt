@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: edu.eci.arsw.typefight.WebsocketsMsbrokerExampleApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.567 sec - in edu.eci.arsw.typefight.WebsocketsMsbrokerExampleApplicationTests
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 8.149 sec <<< FAILURE! - in edu.eci.arsw.typefight.WebsocketsMsbrokerExampleApplicationTests
+contextLoads(edu.eci.arsw.typefight.WebsocketsMsbrokerExampleApplicationTests)  Time elapsed: 0.014 sec  <<< ERROR!
+java.lang.NoClassDefFoundError: edu/eci/arsw/typefight/STOMPMessagesHandler$1
+Caused by: java.lang.ClassNotFoundException: edu.eci.arsw.typefight.STOMPMessagesHandler$1
+
