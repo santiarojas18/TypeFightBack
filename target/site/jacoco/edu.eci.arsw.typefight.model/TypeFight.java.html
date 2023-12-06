@@ -76,9 +76,9 @@ public class TypeFight implements Serializable{
 <span class="nc" id="L76">    }</span>
 
     public void addPlayer(Player player){
-<span class="nc" id="L79">        players.putIfAbsent(player.getColor(), player);</span>
-<span class="nc" id="L80">        playersNames.add(player.getName());</span>
-<span class="nc" id="L81">    }</span>
+<span class="fc" id="L79">        players.putIfAbsent(player.getColor(), player);</span>
+<span class="fc" id="L80">        playersNames.add(player.getName());</span>
+<span class="fc" id="L81">    }</span>
 
     public void addPointToPlayer(String color, String word) {
 <span class="nc" id="L84">        players.get(color).addPoints(word.length());</span>
@@ -112,11 +112,11 @@ public class TypeFight implements Serializable{
     }
 
     public List&lt;Player&gt; getSortedPlayers() {
-<span class="nc" id="L115">        List&lt;Player&gt; playerList = new ArrayList&lt;&gt;(players.values());</span>
-<span class="nc" id="L116">        playerList.sort(Comparator.comparing(Player::getPoints, (points1, points2) -&gt; points2 - points1)</span>
-<span class="nc" id="L117">                .thenComparing(Player::getHealth, (life1, life2) -&gt; life2 - life1)</span>
+<span class="fc" id="L115">        List&lt;Player&gt; playerList = new ArrayList&lt;&gt;(players.values());</span>
+<span class="pc" id="L116">        playerList.sort(Comparator.comparing(Player::getPoints, (points1, points2) -&gt; points2 - points1)</span>
+<span class="pc" id="L117">                .thenComparing(Player::getHealth, (life1, life2) -&gt; life2 - life1)</span>
         );
-<span class="nc" id="L119">        return playerList;</span>
+<span class="fc" id="L119">        return playerList;</span>
     }
 
     @Override

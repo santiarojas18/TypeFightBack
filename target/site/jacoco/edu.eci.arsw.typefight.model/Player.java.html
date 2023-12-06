@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.RedisHash;
 
 import lombok.Data;
 
-<span class="nc bnc" id="L12" title="All 42 branches missed.">@Data</span>
+<span class="pc bpc" id="L12" title="41 of 42 branches missed.">@Data</span>
 @RedisHash(&quot;Player&quot;)
 public class Player implements Serializable {
     @Id
@@ -28,14 +28,14 @@ public class Player implements Serializable {
     @JsonProperty(&quot;alive&quot;)
     private boolean alive;
 
-<span class="nc" id="L31">    public Player(String name, String color){</span>
-<span class="nc" id="L32">        this.name = name;</span>
-<span class="nc" id="L33">        this.color = color;</span>
-<span class="nc" id="L34">        health = 100;</span>
-<span class="nc" id="L35">        points = 0;</span>
-<span class="nc" id="L36">        alive = true;</span>
+<span class="fc" id="L31">    public Player(String name, String color){</span>
+<span class="fc" id="L32">        this.name = name;</span>
+<span class="fc" id="L33">        this.color = color;</span>
+<span class="fc" id="L34">        health = 100;</span>
+<span class="fc" id="L35">        points = 0;</span>
+<span class="fc" id="L36">        alive = true;</span>
 
-<span class="nc" id="L38">    }</span>
+<span class="fc" id="L38">    }</span>
 
 <span class="nc" id="L40">    public Player(String name, String color, Integer health, Integer points, boolean isAlive){</span>
 <span class="nc" id="L41">        this.name = name;</span>
@@ -47,7 +47,7 @@ public class Player implements Serializable {
 <span class="nc" id="L47">    }</span>
 
     public String getName() {
-<span class="nc" id="L50">        return name;</span>
+<span class="fc" id="L50">        return name;</span>
     }
 
     public void setName(String name) {
@@ -55,7 +55,7 @@ public class Player implements Serializable {
 <span class="nc" id="L55">    }</span>
 
     public String getColor() {
-<span class="nc" id="L58">        return color;</span>
+<span class="fc" id="L58">        return color;</span>
     }
 
     public void setColor(String color) {
