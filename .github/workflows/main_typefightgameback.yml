@@ -50,4 +50,4 @@ jobs:
           app-name: 'typefightgameback'
           slot-name: 'Production'
           package: '*.jar'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9B553EDF251D40D4AB5277C1DEEACAA1 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_04B046DA82554B0F9106262A050F4CAE }}
