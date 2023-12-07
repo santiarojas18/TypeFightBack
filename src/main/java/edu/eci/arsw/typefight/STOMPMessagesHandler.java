@@ -56,6 +56,7 @@ public class STOMPMessagesHandler {
         cacheService.saveSharedTypeFight(typeFight);
         //System.out.println("-------Después de agregar palabras-------:" + typeFightService.getTypeFightById(1).getCurrentWords());
         msgt.convertAndSend("/topic/showCurrentWord", typeFight.getCurrentWords()); // Envía la palabra actual a todos los jugadores.
+        msgt.convertAndSend("/topic/updateHealth", typeFight.getPlayers());
     }
 
     @MessageMapping("catchword")
