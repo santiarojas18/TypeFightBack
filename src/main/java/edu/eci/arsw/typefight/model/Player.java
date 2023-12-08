@@ -1,7 +1,6 @@
 package edu.eci.arsw.typefight.model;
 
 import java.io.Serializable;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;

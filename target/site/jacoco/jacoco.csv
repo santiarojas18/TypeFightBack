@@ -3,7 +3,7 @@ TypeFight,edu.eci.arsw.typefight,STOMPMessagesHandler,522,28,32,2,101,8,23,3,7,2
 TypeFight,edu.eci.arsw.typefight,TypeFightApplication,5,3,0,0,2,1,1,1,1,1
 TypeFight,edu.eci.arsw.typefight,STOMPMessagesHandler.new TypeReference() {...},6,0,0,0,1,0,1,0,1,0
 TypeFight,edu.eci.arsw.typefight,TypeFightWebSocketConfig,0,47,0,0,0,9,0,3,0,3
-TypeFight,edu.eci.arsw.typefight.model,TypeFight,333,563,64,2,20,38,47,17,14,17
+TypeFight,edu.eci.arsw.typefight.model,TypeFight,314,582,60,6,14,44,48,16,16,15
 TypeFight,edu.eci.arsw.typefight.model,Player,176,133,41,3,4,40,25,15,4,14
 TypeFight,edu.eci.arsw.typefight.config,RedisConfiguration,0,101,0,0,0,25,0,4,0,4
 TypeFight,edu.eci.arsw.typefight.config,TypeFightDeserializer,56,98,8,10,8,23,8,4,0,3
