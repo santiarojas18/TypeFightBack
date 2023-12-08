@@ -66,9 +66,9 @@ public class TypeFight implements Serializable{
 <span class="fc" id="L66">    }</span>
 
     public String getRandomWord(){
-<span class="nc" id="L69">        Random random = new Random();</span>
-<span class="nc" id="L70">        int randomIndex = random.nextInt(words.size());</span>
-<span class="nc" id="L71">        return words.get(randomIndex);</span>
+<span class="fc" id="L69">        Random random = new Random();</span>
+<span class="fc" id="L70">        int randomIndex = random.nextInt(words.size());</span>
+<span class="fc" id="L71">        return words.get(randomIndex);</span>
     }
 
     public void deleteWord(String word){
@@ -128,10 +128,10 @@ public class TypeFight implements Serializable{
     }
 
     public void addRandomWord(String word) {
-<span class="nc bnc" id="L131" title="All 4 branches missed.">        if(currentWords.size() &lt; MAX_CURRENT_WORDS &amp;&amp; !currentWords.contains(word)){</span>
-<span class="nc" id="L132">            currentWords.add(word);</span>
+<span class="pc bpc" id="L131" title="2 of 4 branches missed.">        if(currentWords.size() &lt; MAX_CURRENT_WORDS &amp;&amp; !currentWords.contains(word)){</span>
+<span class="fc" id="L132">            currentWords.add(word);</span>
         }
-<span class="nc" id="L134">    }</span>
+<span class="fc" id="L134">    }</span>
 
     public ArrayList&lt;String&gt; getPlayersNames() {
 <span class="nc" id="L137">        return playersNames;</span>

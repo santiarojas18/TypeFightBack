@@ -63,7 +63,7 @@ public class Player implements Serializable {
 <span class="nc" id="L63">    }</span>
 
     public Integer getHealth() {
-<span class="nc" id="L66">        return health;</span>
+<span class="fc" id="L66">        return health;</span>
     }
 
     public void setHealth(Integer health) {
@@ -71,7 +71,7 @@ public class Player implements Serializable {
 <span class="nc" id="L71">    }</span>
 
     public Integer getPoints() {
-<span class="nc" id="L74">        return points;</span>
+<span class="fc" id="L74">        return points;</span>
     }
 
     public void setPoints(int points) {
@@ -79,34 +79,34 @@ public class Player implements Serializable {
 <span class="nc" id="L79">    }</span>
 
     public void addPoints(int points) {
-<span class="nc" id="L82">        this.points += points;</span>
-<span class="nc" id="L83">    }</span>
+<span class="fc" id="L82">        this.points += points;</span>
+<span class="fc" id="L83">    }</span>
 
     public void decreaseHealth(int damage){
-<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (health - damage &lt;= 0) {</span>
-<span class="nc" id="L87">            setAlive(false);</span>
-<span class="nc" id="L88">            health = 0;</span>
-<span class="nc" id="L89">        } else {</span>
-<span class="nc" id="L90">            health += -damage;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (health - damage &lt;= 0) {</span>
+<span class="fc" id="L87">            setAlive(false);</span>
+<span class="fc" id="L88">            health = 0;</span>
+<span class="fc" id="L89">        } else {</span>
+<span class="fc" id="L90">            health += -damage;</span>
         }
-<span class="nc" id="L92">    }</span>
+<span class="fc" id="L92">    }</span>
 
     public boolean isAlive() {
-<span class="nc" id="L95">        return alive;</span>
+<span class="fc" id="L95">        return alive;</span>
     }
 
     public void setAlive(boolean alive) {
-<span class="nc" id="L99">        this.alive = alive;</span>
-<span class="nc" id="L100">    }</span>
+<span class="fc" id="L99">        this.alive = alive;</span>
+<span class="fc" id="L100">    }</span>
 
     @Override
     public String toString() {
-<span class="nc" id="L104">        return &quot;Player{&quot; +</span>
-<span class="nc" id="L105">                &quot;name='&quot; + name + '\'' +</span>
-<span class="nc" id="L106">                &quot;, color='&quot; + color + '\'' +</span>
-<span class="nc" id="L107">                &quot;, health=&quot; + health +</span>
-<span class="nc" id="L108">                &quot;, points=&quot; + points +</span>
-<span class="nc" id="L109">                '}';</span>
+<span class="fc" id="L104">        return &quot;Player{&quot; +</span>
+<span class="fc" id="L105">                &quot;name='&quot; + name + '\'' +</span>
+<span class="fc" id="L106">                &quot;, color='&quot; + color + '\'' +</span>
+<span class="fc" id="L107">                &quot;, health=&quot; + health +</span>
+<span class="fc" id="L108">                &quot;, points=&quot; + points +</span>
+<span class="fc" id="L109">                '}';</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
