@@ -49,7 +49,7 @@ public class STOMPMessagesHandler {
     public void getInitialWord() {
         //System.out.println(&quot;-----Antes de agregar palabras-----: &quot; + typeFightService.getTypeFightById(1).getCurrentWords());
 <span class="fc" id="L51">        typeFight = cacheService.loadOrCreateTypeFight();</span>
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        if(typeFight.getCurrentWords().size() &lt; typeFight.MAX_CURRENT_WORDS){</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if(typeFight.getCurrentWords().size() &lt; typeFight.MAX_CURRENT_WORDS){</span>
 <span class="fc" id="L53">            String currentWord = typeFight.getRandomWord(); // Obtén la palabra actual desde tu modelo TypeFight</span>
 <span class="fc" id="L54">            typeFight.addRandomWord(currentWord);</span>
         }
