@@ -27,11 +27,6 @@ public class WebsocketsMsbrokerExampleApplicationTests {
         typeFight = new TypeFight();
     }
 
-	@Test
-	public void contextLoads() {
-		assertEquals(1,1);
-	}
-
     @Test
     public void testAddPlayer() {
         typeFight.addPlayer(player);

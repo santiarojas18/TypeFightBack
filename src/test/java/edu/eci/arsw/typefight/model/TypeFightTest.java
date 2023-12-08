@@ -1,11 +1,11 @@
 package edu.eci.arsw.typefight.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -82,7 +82,30 @@ public class TypeFightTest {
     public void testAddRandomWord() {
         String word = "NewWord";
         typeFight.addRandomWord(word);
-
         assertTrue(typeFight.getCurrentWords().contains(word));
+    }
+
+    @Test
+    public void testGetRandomWord() {
+        assertNotNull(typeFight.getRandomWord());
+
+    }
+
+    @Test
+    public void testGetPlayersNames() {
+        ArrayList<String> playersNames = new ArrayList<>();
+        Player player1 = new Player("Player1", "Red");
+        Player player2 = new Player("Player2", "Blue");
+
+        typeFight.addPlayer(player1);
+        typeFight.addPlayer(player2);
+
+        playersNames.add("Player1");
+        playersNames.add("Player2");
+
+        assertEquals(playersNames, typeFight.getPlayersNames());
+
+        
+
     }
 }

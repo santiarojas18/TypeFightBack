@@ -2,12 +2,12 @@ package edu.eci.arsw.typefight;
 
 import edu.eci.arsw.typefight.model.Player;
 import edu.eci.arsw.typefight.model.TypeFight;
-import edu.eci.arsw.typefight.repository.PlayerRepository;
+
 
 import edu.eci.arsw.typefight.service.PlayerService;
 import edu.eci.arsw.typefight.service.CacheService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.DependsOn;
+
 import org.springframework.context.annotation.Lazy;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,8 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
 
 @Controller
 public class STOMPMessagesHandler {
