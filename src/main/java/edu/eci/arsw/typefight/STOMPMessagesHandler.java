@@ -39,9 +39,12 @@ public class STOMPMessagesHandler {
     int goToPlay;
     boolean gameReset;
 
+    boolean inGame;
+
     public STOMPMessagesHandler() {
         goToPlay = 0;
         gameReset = false;
+        inGame = false;
     }
 
     @Scheduled(fixedRate = 1000)
@@ -56,6 +59,22 @@ public class STOMPMessagesHandler {
         //System.out.println("-------Después de agregar palabras-------:" + typeFightService.getTypeFightById(1).getCurrentWords());
         msgt.convertAndSend("/topic/showCurrentWord", typeFight.getCurrentWords()); // Envía la palabra actual a todos los jugadores.
         msgt.convertAndSend("/topic/updateHealth", typeFight.getPlayers());
+        if(!inGame){
+            if (gameReset){
+                tempTypeFight = cacheService.loadOrCreateTempTypeFight();
+                msgt.convertAndSend("/topic/newentry", tempTypeFight.getPlayers());
+                if (tempTypeFight.getAmountOfPlayers() >= 2) {
+                    msgt.convertAndSend("/topic/readytoplay", true);
+                }
+            } else if (!gameReset) {
+                typeFight = cacheService.loadOrCreateTypeFight();
+                msgt.convertAndSend("/topic/newentry", typeFight.getPlayers());
+                if (typeFight.getAmountOfPlayers() >= 2){
+                    msgt.convertAndSend("/topic/readytoplay", true);
+                }
+            }
+        }
+
     }
 
     @MessageMapping("catchword")
@@ -152,25 +171,37 @@ public class STOMPMessagesHandler {
     @MessageMapping("gotoplay")
     public void handleGoToPlay () {
         System.out.println("Jugador quiere jugar!!");
-        goToPlay++;
-        System.out.println(goToPlay);
-        System.out.println(gameReset);
         tempTypeFight = cacheService.loadOrCreateTempTypeFight();
         typeFight = cacheService.loadOrCreateTypeFight();
-        if (gameReset && goToPlay == tempTypeFight.getPlayers().size()) {
+
+        tempTypeFight.addGoToPlay();
+        typeFight.addGoToPlay();
+
+        cacheService.saveSharedTypeFight(typeFight);
+        cacheService.saveSharedTempTypeFight(tempTypeFight);
+        
+        System.out.println(goToPlay);
+        System.out.println(gameReset);
+        if (gameReset && tempTypeFight.getGoToPlay() == tempTypeFight.getPlayers().size()) {
+            inGame = true;
             typeFight = tempTypeFight;
             cacheService.saveSharedTypeFight(typeFight);
             gameReset = false;
             System.out.println("Ir a jugar!!");
             msgt.convertAndSend("/topic/gotoplay", true);
-            goToPlay = 0;
+            tempTypeFight.setGoToPlay(0);
+            cacheService.saveSharedTempTypeFight(tempTypeFight);
 
-        } else if (!gameReset && goToPlay == typeFight.getPlayers().size()) {
+
+        } else if (!gameReset && typeFight.getGoToPlay() == typeFight.getPlayers().size()) {
             System.out.println("Ir a jugar!!");
+            inGame = true;
             msgt.convertAndSend("/topic/gotoplay", true);
-            goToPlay = 0;
+            typeFight.setGoToPlay(0);
+            cacheService.saveSharedTypeFight(typeFight);
         }
     }
+    
 
     @MessageMapping("showWinner")
     public void handleShowWinner () {
@@ -188,6 +219,7 @@ public class STOMPMessagesHandler {
             System.out.println("Reiniciado");
         }
         Player player = new Player(name, tempTypeFight.getColorByPlayers());
+        inGame = false;
         tempTypeFight.addPlayer(player);
         cacheService.saveSharedTempTypeFight(tempTypeFight);
         msgt.convertAndSend("/topic/playAgain", name);

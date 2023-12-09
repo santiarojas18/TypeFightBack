@@ -36,6 +36,9 @@ public class TypeFight implements Serializable{
     @JsonProperty("MAX_CURRENT_WORDS")
     public static final int MAX_CURRENT_WORDS = 5; // Máximo de palabras actuales
 
+    @JsonProperty("goToPlay")
+    private int goToPlay;
+
     public TypeFight(){
         words = new ArrayList<>(Arrays.asList("Abrir", "Búsqueda", "Cautivar", "Difuso", "Esencia", "Fabuloso", "Galaxia", "Habilidad", "Inquietud", "Júbilo",
                 "Kilómetro", "Luminoso", "Mariposa", "Navegante", "Ocasión", "Palabra", "Química", "Razonar", "Silencio", "Tardanza",
@@ -149,4 +152,17 @@ public class TypeFight implements Serializable{
     public void setPlayers(HashMap<String, Player> players) {
         this.players = players;
     }
+
+    public int getGoToPlay(){
+        return goToPlay;
+    }
+
+    public void setGoToPlay(int newGoToPlay){
+        this.goToPlay=  newGoToPlay;
+    }
+
+    public void addGoToPlay(){
+        this.goToPlay++;
+    }
+
 }

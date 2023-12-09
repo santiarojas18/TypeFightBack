@@ -27,7 +27,7 @@ import java.io.Serializable;
 <span class="fc" id="L27">        ValueOperations&lt;String, TypeFight&gt; ops = redisTemplate.opsForValue();</span>
 <span class="fc" id="L28">        TypeFight typeFight = ops.get(TYPE_FIGHT_KEY);</span>
 
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (typeFight == null) {</span>
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        if (typeFight == null) {</span>
 <span class="fc" id="L31">            System.out.println(&quot;creando&quot;);</span>
 <span class="fc" id="L32">            typeFight = new TypeFight(); // Crea una nueva instancia si no está en Redis</span>
 <span class="fc" id="L33">            ops.set(TYPE_FIGHT_KEY, typeFight); // Almacena en Redis</span>
@@ -39,15 +39,15 @@ import java.io.Serializable;
 
     @PostConstruct
     public TypeFight loadOrCreateTempTypeFight() {
-<span class="fc" id="L42">        ValueOperations&lt;String, TypeFight&gt; ops = redisTemplate.opsForValue();</span>
-<span class="fc" id="L43">        TypeFight tempTypeFight = ops.get(TEMP_TYPE_FIGHT_KEY);</span>
+<span class="nc" id="L42">        ValueOperations&lt;String, TypeFight&gt; ops = redisTemplate.opsForValue();</span>
+<span class="nc" id="L43">        TypeFight tempTypeFight = ops.get(TEMP_TYPE_FIGHT_KEY);</span>
 
-<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (tempTypeFight == null) {</span>
-<span class="fc" id="L46">            System.out.println(&quot;creando&quot;);</span>
-<span class="fc" id="L47">            tempTypeFight = new TypeFight(); // Crea una nueva instancia si no está en Redis</span>
-<span class="fc" id="L48">            ops.set(TEMP_TYPE_FIGHT_KEY, tempTypeFight); // Almacena en Redis</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (tempTypeFight == null) {</span>
+<span class="nc" id="L46">            System.out.println(&quot;creando&quot;);</span>
+<span class="nc" id="L47">            tempTypeFight = new TypeFight(); // Crea una nueva instancia si no está en Redis</span>
+<span class="nc" id="L48">            ops.set(TEMP_TYPE_FIGHT_KEY, tempTypeFight); // Almacena en Redis</span>
         }
-<span class="fc" id="L50">        return tempTypeFight;</span>
+<span class="nc" id="L50">        return tempTypeFight;</span>
 
         // Usa 'typeFight' en tu aplicación
     }

@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: edu.eci.arsw.typefight.MessagesHandlerTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.534 sec <<< FAILURE! - in edu.eci.arsw.typefight.MessagesHandlerTests
+initializationError(edu.eci.arsw.typefight.MessagesHandlerTests)  Time elapsed: 0.018 sec  <<< ERROR!
+java.lang.IllegalAccessError: tried to access method org.mockito.internal.util.MockUtil.<init>()V from class org.springframework.boot.test.mock.mockito.MockReset
+

@@ -85,7 +85,7 @@ public class Player implements Serializable {
 <span class="fc bfc" id="L85" title="All 2 branches covered.">        if (health - damage &lt;= 0) {</span>
 <span class="fc" id="L86">            setAlive(false);</span>
 <span class="fc" id="L87">            health = 0;</span>
-<span class="fc" id="L88">        } else {</span>
+        } else {
 <span class="fc" id="L89">            health += -damage;</span>
         }
 <span class="fc" id="L91">    }</span>
@@ -101,11 +101,11 @@ public class Player implements Serializable {
     @Override
     public String toString() {
 <span class="fc" id="L103">        return &quot;Player{&quot; +</span>
-<span class="fc" id="L104">                &quot;name='&quot; + name + '\'' +</span>
-<span class="fc" id="L105">                &quot;, color='&quot; + color + '\'' +</span>
-<span class="fc" id="L106">                &quot;, health=&quot; + health +</span>
-<span class="fc" id="L107">                &quot;, points=&quot; + points +</span>
-<span class="fc" id="L108">                '}';</span>
+                &quot;name='&quot; + name + '\'' +
+                &quot;, color='&quot; + color + '\'' +
+                &quot;, health=&quot; + health +
+                &quot;, points=&quot; + points +
+                '}';
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -100,7 +100,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.12.4</version> <!-- Verifica la última versión en https://search.maven.org/ -->
+            <version>2.7.5</version> <!-- Verifica la última versión en https://search.maven.org/ -->
             <scope>test</scope>
         </dependency>
     </dependencies>
