@@ -189,16 +189,10 @@ public class STOMPMessagesHandler {
             gameReset = false;
             System.out.println("Ir a jugar!!");
             msgt.convertAndSend("/topic/gotoplay", true);
-            tempTypeFight.setGoToPlay(0);
-            cacheService.saveSharedTempTypeFight(tempTypeFight);
-
-
         } else if (!gameReset && typeFight.getGoToPlay() == typeFight.getPlayers().size()) {
             System.out.println("Ir a jugar!!");
             inGame = true;
             msgt.convertAndSend("/topic/gotoplay", true);
-            typeFight.setGoToPlay(0);
-            cacheService.saveSharedTypeFight(typeFight);
         }
     }
 
@@ -220,6 +214,7 @@ public class STOMPMessagesHandler {
         }
         Player player = new Player(name, tempTypeFight.getColorByPlayers());
         inGame = false;
+        tempTypeFight.setGoToPlay(0);
         tempTypeFight.addPlayer(player);
         cacheService.saveSharedTempTypeFight(tempTypeFight);
         msgt.convertAndSend("/topic/playAgain", name);
