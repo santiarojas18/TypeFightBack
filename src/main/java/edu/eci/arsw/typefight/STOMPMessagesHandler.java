@@ -73,7 +73,21 @@ public class STOMPMessagesHandler {
                     msgt.convertAndSend("/topic/readytoplay", true);
                 }
             }
+
+            if (gameReset && tempTypeFight.getGoToPlay() == tempTypeFight.getPlayers().size()) {
+                inGame = true;
+                typeFight = tempTypeFight;
+                cacheService.saveSharedTypeFight(typeFight);
+                gameReset = false;
+                System.out.println("Ir a jugar!!");
+                msgt.convertAndSend("/topic/gotoplay", true);
+            } else if (!gameReset && typeFight.getGoToPlay() == typeFight.getPlayers().size()) {
+                System.out.println("Ir a jugar!!");
+                inGame = true;
+                msgt.convertAndSend("/topic/gotoplay", true);
+            }
         }
+
 
     }
 
