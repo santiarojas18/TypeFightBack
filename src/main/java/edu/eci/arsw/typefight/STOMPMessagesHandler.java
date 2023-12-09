@@ -201,7 +201,7 @@ public class STOMPMessagesHandler {
             cacheService.saveSharedTypeFight(typeFight);
         }
     }
-    
+
 
     @MessageMapping("showWinner")
     public void handleShowWinner () {
