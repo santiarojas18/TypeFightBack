@@ -53,8 +53,8 @@ import java.io.Serializable;
     }
 
     public void saveSharedTypeFight(TypeFight typeFight) {
-<span class="nc" id="L56">        redisTemplate.opsForValue().set(TYPE_FIGHT_KEY, typeFight);</span>
-<span class="nc" id="L57">    }</span>
+<span class="fc" id="L56">        redisTemplate.opsForValue().set(TYPE_FIGHT_KEY, typeFight);</span>
+<span class="fc" id="L57">    }</span>
 
     public void saveSharedTempTypeFight(TypeFight tempTypeFight) {
 <span class="nc" id="L60">        redisTemplate.opsForValue().set(TEMP_TYPE_FIGHT_KEY, tempTypeFight);</span>

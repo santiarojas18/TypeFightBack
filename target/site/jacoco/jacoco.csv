@@ -8,4 +8,4 @@ TypeFight,edu.eci.arsw.typefight.model,Player,176,133,41,3,4,40,25,15,4,14
 TypeFight,edu.eci.arsw.typefight.config,RedisConfiguration,0,101,0,0,0,25,0,4,0,4
 TypeFight,edu.eci.arsw.typefight.config,TypeFightDeserializer,56,98,8,10,8,23,8,4,0,3
 TypeFight,edu.eci.arsw.typefight.service,PlayerService,12,3,0,0,2,1,2,1,2,1
-TypeFight,edu.eci.arsw.typefight.service,CacheService,14,51,0,4,4,15,2,5,2,3
+TypeFight,edu.eci.arsw.typefight.service,CacheService,7,58,0,4,2,17,1,6,1,4

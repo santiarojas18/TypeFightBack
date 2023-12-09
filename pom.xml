@@ -97,8 +97,12 @@
             <artifactId>sonar-maven-plugin</artifactId>
             <version>3.10.0.2594</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.12.4</version> <!-- Verifica la última versión en https://search.maven.org/ -->
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
