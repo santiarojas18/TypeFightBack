@@ -73,7 +73,8 @@ public class STOMPMessagesHandler {
                     msgt.convertAndSend("/topic/readytoplay", true);
                 }
             }
-
+            tempTypeFight = cacheService.loadOrCreateTempTypeFight();
+            typeFight = cacheService.loadOrCreateTypeFight();
             if (gameReset && tempTypeFight.getGoToPlay() == tempTypeFight.getPlayers().size()) {
                 inGame = true;
                 typeFight = tempTypeFight;
