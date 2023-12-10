@@ -65,8 +65,7 @@ public class STOMPMessagesHandler {
         //System.out.println("-------Después de agregar palabras-------:" + typeFightService.getTypeFightById(1).getCurrentWords());
         msgt.convertAndSend("/topic/showCurrentWord", typeFight.getCurrentWords()); // Envía la palabra actual a todos los jugadores.
         msgt.convertAndSend("/topic/updateHealth", typeFight.getPlayers());
-        if(!inGame){
-            if (typeFight.getGameReset()){
+        if (typeFight.getGameReset()){
                 tempTypeFight = cacheService.loadOrCreateTempTypeFight();
                 msgt.convertAndSend("/topic/newentry", tempTypeFight.getPlayers());
                 if (tempTypeFight.getAmountOfPlayers() >= 2) {
@@ -78,7 +77,8 @@ public class STOMPMessagesHandler {
                 if (typeFight.getAmountOfPlayers() >= 2){
                     msgt.convertAndSend("/topic/readytoplay", true);
                 }
-            }
+        }
+        if(!inGame){
             tempTypeFight = cacheService.loadOrCreateTempTypeFight();
             typeFight = cacheService.loadOrCreateTypeFight();
             if (typeFight.getGameReset() && tempTypeFight.getGoToPlay() == tempTypeFight.getPlayers().size()) {
