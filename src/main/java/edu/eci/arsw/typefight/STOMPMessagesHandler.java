@@ -210,14 +210,12 @@ public class STOMPMessagesHandler {
         System.out.println(goToPlay);
         System.out.println(gameReset);
         if (typeFight.getGameReset() && tempTypeFight.getGoToPlay() == tempTypeFight.getPlayers().size()) {
-            inGame = true;
             typeFight = tempTypeFight;
             cacheService.saveSharedTypeFight(typeFight);
             System.out.println("Ir a jugar!!");
             msgt.convertAndSend("/topic/gotoplay", true);
         } else if (!typeFight.getGameReset() && typeFight.getGoToPlay() == typeFight.getPlayers().size()) {
             System.out.println("Ir a jugar!!");
-            inGame = true;
             msgt.convertAndSend("/topic/gotoplay", true);
         }
     }
