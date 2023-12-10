@@ -39,6 +39,9 @@ public class TypeFight implements Serializable{
     @JsonProperty("goToPlay")
     private int goToPlay;
 
+    @JsonProperty("gameReset")
+    private boolean gameReset  = false;
+
     public TypeFight(){
         words = new ArrayList<>(Arrays.asList("Abrir", "Búsqueda", "Cautivar", "Difuso", "Esencia", "Fabuloso", "Galaxia", "Habilidad", "Inquietud", "Júbilo",
                 "Kilómetro", "Luminoso", "Mariposa", "Navegante", "Ocasión", "Palabra", "Química", "Razonar", "Silencio", "Tardanza",
@@ -163,6 +166,14 @@ public class TypeFight implements Serializable{
 
     public void addGoToPlay(){
         this.goToPlay++;
+    }
+
+    public boolean getGameReset(){
+        return gameReset;
+    }
+
+    public void setGameReset(boolean gameReset){
+        this.gameReset = gameReset;
     }
 
 }

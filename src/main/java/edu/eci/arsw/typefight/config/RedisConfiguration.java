@@ -3,6 +3,10 @@ package edu.eci.arsw.typefight.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import edu.eci.arsw.typefight.model.TypeFight;
+
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -71,6 +75,16 @@ public class RedisConfiguration {
         config.setTestOnBorrow(true);
         jedisPool = new JedisPool(config, hostName, port,300000,accessKey);
         return jedisPool;
-}
+    }
+
+    @Bean(destroyMethod = "shutdown")    
+    public RedissonClient redissonClient(JedisConnectionFactory jedisConnectionFactory) { 
+        String url = jedisConnectionFactory.getHostName() + ":" + jedisConnectionFactory.getPort() + ",password=" + jedisConnectionFactory.getPassword() + ",ssl=true,abortConnect=false";       
+        Config config = new Config();        
+        config.useSingleServer()
+            .setAddress("redis://" + jedisConnectionFactory.getHostName() + ":" + jedisConnectionFactory.getPort())                
+            .setPassword(jedisConnectionFactory.getPassword());        
+        return Redisson.create(config);    
+    }
 
  }

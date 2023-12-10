@@ -64,6 +64,7 @@ public class TypeFightDeserializer extends StdDeserializer<TypeFight> {
         }
 
         JsonNode nodeGoToPlay = node.get("goToPlay");
+        JsonNode nodeGameReset = node.get("gameReset");
 
 
         // Crear el objeto TypeFight con los atributos deserializados
@@ -74,6 +75,7 @@ public class TypeFightDeserializer extends StdDeserializer<TypeFight> {
         typeFight.setCurrentWords(currentWords);
         typeFight.setPlayersNames(playerNames);
         typeFight.setGoToPlay(nodeGoToPlay.asInt());
+        typeFight.setGameReset(nodeGameReset.asBoolean());
 
         return typeFight;
     }

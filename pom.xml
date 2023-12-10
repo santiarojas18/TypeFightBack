@@ -103,6 +103,11 @@
             <version>2.7.5</version> <!-- Verifica la última versión en https://search.maven.org/ -->
             <scope>test</scope>
         </dependency>
+        <dependency>    
+            <groupId>org.redisson</groupId>    
+            <artifactId>redisson</artifactId>    
+            <version>3.25.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
