@@ -71,7 +71,7 @@ public class STOMPMessagesHandler {
                 if (tempTypeFight.getAmountOfPlayers() >= 2) {
                     msgt.convertAndSend("/topic/readytoplay", true);
                 }
-            } else if (!typeFight.getGameReset()) {
+        } else if (!typeFight.getGameReset()) {
                 typeFight = cacheService.loadOrCreateTypeFight();
                 msgt.convertAndSend("/topic/newentry", typeFight.getPlayers());
                 if (typeFight.getAmountOfPlayers() >= 2){
@@ -82,15 +82,12 @@ public class STOMPMessagesHandler {
             tempTypeFight = cacheService.loadOrCreateTempTypeFight();
             typeFight = cacheService.loadOrCreateTypeFight();
             if (typeFight.getGameReset() && tempTypeFight.getGoToPlay() == tempTypeFight.getPlayers().size()) {
-                inGame = true;
                 typeFight = tempTypeFight;
                 cacheService.saveSharedTypeFight(typeFight);
-                gameReset = false;
                 System.out.println("Ir a jugar!!");
                 msgt.convertAndSend("/topic/gotoplay", true);
             } else if (!typeFight.getGameReset() && typeFight.getGoToPlay() == typeFight.getPlayers().size()) {
                 System.out.println("Ir a jugar!!");
-                inGame = true;
                 msgt.convertAndSend("/topic/gotoplay", true);
             }
         }
@@ -100,6 +97,9 @@ public class STOMPMessagesHandler {
 
     @MessageMapping("catchword")
     public void handleWordEvent(String message) throws Exception {
+        if(!inGame){
+            inGame = true;
+        }
 
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, String> messageMap = objectMapper.readValue(message, new TypeReference<Map<String,String>>() {});
