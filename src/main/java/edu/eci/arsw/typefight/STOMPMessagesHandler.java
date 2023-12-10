@@ -78,7 +78,7 @@ public class STOMPMessagesHandler {
                     msgt.convertAndSend("/topic/readytoplay", true);
                 }
         }
-        if(!inGame){
+        if(true){
             tempTypeFight = cacheService.loadOrCreateTempTypeFight();
             typeFight = cacheService.loadOrCreateTypeFight();
             if (typeFight.getGameReset() && tempTypeFight.getGoToPlay() == tempTypeFight.getPlayers().size()) {
@@ -97,10 +97,6 @@ public class STOMPMessagesHandler {
 
     @MessageMapping("catchword")
     public void handleWordEvent(String message) throws Exception {
-        if(!inGame){
-            inGame = true;
-        }
-
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, String> messageMap = objectMapper.readValue(message, new TypeReference<Map<String,String>>() {});
 
