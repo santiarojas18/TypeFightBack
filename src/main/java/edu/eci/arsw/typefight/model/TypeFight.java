@@ -10,7 +10,7 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-@Data
+
 @RedisHash("TypeFight")
 public class TypeFight implements Serializable{
     @Id
@@ -180,6 +180,14 @@ public class TypeFight implements Serializable{
 
     public void setGameReset(boolean gameReset){
         this.gameReset = gameReset;
+    }
+
+    public void  setCurrentWords(ArrayList<String> currentWords){
+        this.currentWords = currentWords;
+    }
+
+    public void setPlayersNames(ArrayList<String> playerNames){
+        this.playersNames = playerNames;
     }
 
 }

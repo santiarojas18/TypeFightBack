@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisHash;
 
 import lombok.Data;
 
-@Data
+
 @RedisHash("Player")
 public class Player implements Serializable {
     @Id
@@ -107,4 +107,5 @@ public class Player implements Serializable {
                 ", points=" + points +
                 '}';
     }
+
 }
