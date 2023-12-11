@@ -1,6 +1,7 @@
 package edu.eci.arsw.typefight.model;
 
 import java.io.Serializable;
+import java.security.SecureRandom;
 import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,7 +46,7 @@ public class TypeFight implements Serializable{
 
 
     @JsonIgnore
-    private final Random random;
+    private final SecureRandom random;
 
     public TypeFight(){
         words = new ArrayList<>(Arrays.asList("Abrir", "Búsqueda", "Cautivar", "Difuso", "Esencia", "Fabuloso", "Galaxia", "Habilidad", "Inquietud", "Júbilo",
@@ -60,7 +61,7 @@ public class TypeFight implements Serializable{
                 "Nido", "Océano", "Pantalón", "Quirófano", "Reloj", "Sapo", "Trenza", "Unicornio", "Vela", "Zapato"));
         //players = new HashMap<>();
         colors = new String[] {"Rojo", "Amarillo", "Azul", "Verde", "Naranja"};
-        this.random = new Random();
+        this.random = new SecureRandom();
 
         //Mock
         //Player juan = new Player("Juan", "azul");
