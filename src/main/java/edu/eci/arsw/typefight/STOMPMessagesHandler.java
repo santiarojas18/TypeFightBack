@@ -76,6 +76,12 @@ public class STOMPMessagesHandler {
                     msgt.convertAndSend("/topic/readytoplay", true);
                 }
         }
+        for (Player player : typeFight.getPlayers()) {
+            msgt.convertAndSend("/topic/gameOver." + player.getName(), player.getHealth());
+        }
+        if(typeFight.isThereAWinner() != null){
+            msgt.convertAndSend("/topic/thereIsAWinner", typeFight.getSortedPlayers().get(0));
+        }       
         
         tempTypeFight = cacheService.loadOrCreateTempTypeFight();
         typeFight = cacheService.loadOrCreateTypeFight();
