@@ -3,6 +3,7 @@ package edu.eci.arsw.typefight.model;
 import java.io.Serializable;
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -42,6 +43,10 @@ public class TypeFight implements Serializable{
     @JsonProperty("gameReset")
     private boolean gameReset  = false;
 
+
+    @JsonIgnore
+    private final Random random;
+
     public TypeFight(){
         words = new ArrayList<>(Arrays.asList("Abrir", "Búsqueda", "Cautivar", "Difuso", "Esencia", "Fabuloso", "Galaxia", "Habilidad", "Inquietud", "Júbilo",
                 "Kilómetro", "Luminoso", "Mariposa", "Navegante", "Ocasión", "Palabra", "Química", "Razonar", "Silencio", "Tardanza",
@@ -55,6 +60,7 @@ public class TypeFight implements Serializable{
                 "Nido", "Océano", "Pantalón", "Quirófano", "Reloj", "Sapo", "Trenza", "Unicornio", "Vela", "Zapato"));
         //players = new HashMap<>();
         colors = new String[] {"Rojo", "Amarillo", "Azul", "Verde", "Naranja"};
+        this.random = new Random();
 
         //Mock
         //Player juan = new Player("Juan", "azul");
@@ -69,7 +75,6 @@ public class TypeFight implements Serializable{
     }
 
     public String getRandomWord(){
-        Random random = new Random();
         int randomIndex = random.nextInt(words.size());
         return words.get(randomIndex);
     }

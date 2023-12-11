@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import edu.eci.arsw.typefight.model.TypeFight;
 
+
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -22,6 +23,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.io.Serializable;
+import java.util.logging.Logger;
 
 @Configuration
 public class RedisConfiguration {
@@ -63,23 +65,21 @@ public class RedisConfiguration {
 
         return redisTemplate;
     }
-
     @Bean
     public JedisPool getConfig() {
-        JedisPoolConfig config =new JedisPoolConfig();
-        JedisPool jedisPool = new JedisPool();
+        JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(100);
         config.setMaxIdle(200);
         config.setMinIdle(50);
         config.setMaxWaitMillis(30000);
         config.setTestOnBorrow(true);
-        jedisPool = new JedisPool(config, hostName, port,300000,accessKey);
-        return jedisPool;
+        try (JedisPool jedisPool = new JedisPool(config, hostName, port, 300000, accessKey)) {
+            return jedisPool;
+        }
     }
 
     @Bean(destroyMethod = "shutdown")    
     public RedissonClient redissonClient(JedisConnectionFactory jedisConnectionFactory) { 
-        String url = jedisConnectionFactory.getHostName() + ":" + jedisConnectionFactory.getPort() + ",password=" + jedisConnectionFactory.getPassword() + ",ssl=true,abortConnect=false";       
         Config config = new Config();        
         config.useSingleServer()
             .setAddress("redis://" + jedisConnectionFactory.getHostName() + ":" + jedisConnectionFactory.getPort())                
