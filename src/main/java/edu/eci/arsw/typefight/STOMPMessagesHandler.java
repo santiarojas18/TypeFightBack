@@ -46,9 +46,9 @@ public class STOMPMessagesHandler {
 
     boolean inGame;
 
-    private static final String newEntry = "/topic/newentry";
-    private static final String readyToPlay = "/topic/readytoplay";
-    private static final String goToPlayString = "/topic/gotoplay";
+    private static final String NEW_ENTRY = "/topic/newentry";
+    private static final String READY_TO_PLAY = "/topic/readytoplay";
+    private static final String GO_TO_PLAY = "/topic/gotoplay";
 
     @Autowired
     public STOMPMessagesHandler(SimpMessagingTemplate msgt,
@@ -78,15 +78,15 @@ public class STOMPMessagesHandler {
         msgt.convertAndSend("/topic/updateHealth", typeFight.getPlayers());
         if (typeFight.getGameReset()){
                 tempTypeFight = cacheService.loadOrCreateTempTypeFight();
-                msgt.convertAndSend(newEntry, tempTypeFight.getPlayers());
+                msgt.convertAndSend(NEW_ENTRY, tempTypeFight.getPlayers());
                 if (tempTypeFight.getAmountOfPlayers() >= 2) {
-                    msgt.convertAndSend(readyToPlay, true);
+                    msgt.convertAndSend(READY_TO_PLAY, true);
                 }
         } else if (!typeFight.getGameReset()) {
                 typeFight = cacheService.loadOrCreateTypeFight();
-                msgt.convertAndSend(newEntry, typeFight.getPlayers());
+                msgt.convertAndSend(NEW_ENTRY, typeFight.getPlayers());
                 if (typeFight.getAmountOfPlayers() >= 2){
-                    msgt.convertAndSend(readyToPlay, true);
+                    msgt.convertAndSend(READY_TO_PLAY, true);
                 }
         }
         for (Player player : typeFight.getPlayers()) {
@@ -101,11 +101,9 @@ public class STOMPMessagesHandler {
         if (typeFight.getGameReset() && tempTypeFight.getGoToPlay() == tempTypeFight.getPlayers().size()) {
             typeFight = tempTypeFight;
             cacheService.saveSharedTypeFight(typeFight);
-            System.out.println("Ir a jugar!!");
-            msgt.convertAndSend(goToPlayString, true);
+            msgt.convertAndSend(GO_TO_PLAY, true);
         } else if (!typeFight.getGameReset() && typeFight.getGoToPlay() == typeFight.getPlayers().size()) {
-            System.out.println("Ir a jugar!!");
-            msgt.convertAndSend(goToPlayString, true);
+            msgt.convertAndSend(GO_TO_PLAY, true);
         }
     }
 
@@ -150,7 +148,6 @@ public class STOMPMessagesHandler {
 
     @MessageMapping("newplayer.{uniqueId}")
     public void handleNewPlayerEvent(String name, @DestinationVariable String uniqueId) {
-        System.out.println("Jugador añadido:" + name);
         boolean isUsed;
         if (typeFight.getGameReset()) {
             synchronized (typeFight) {
@@ -192,15 +189,15 @@ public class STOMPMessagesHandler {
         System.out.println("Jugadores del type: " + typeFight.getPlayers());
         if (typeFight.getGameReset()){
             tempTypeFight = cacheService.loadOrCreateTempTypeFight();
-            msgt.convertAndSend(newEntry, tempTypeFight.getPlayers());
+            msgt.convertAndSend(NEW_ENTRY, tempTypeFight.getPlayers());
             if (tempTypeFight.getAmountOfPlayers() >= 2) {
-                msgt.convertAndSend(readyToPlay, true);
+                msgt.convertAndSend(READY_TO_PLAY, true);
             }
         } else if (!typeFight.getGameReset()) {
             typeFight = cacheService.loadOrCreateTypeFight();
-            msgt.convertAndSend(newEntry, typeFight.getPlayers());
+            msgt.convertAndSend(NEW_ENTRY, typeFight.getPlayers());
             if (typeFight.getAmountOfPlayers() >= 2){
-                msgt.convertAndSend(readyToPlay, true);
+                msgt.convertAndSend(READY_TO_PLAY, true);
             }
         }
     }
@@ -222,11 +219,9 @@ public class STOMPMessagesHandler {
         if (typeFight.getGameReset() && tempTypeFight.getGoToPlay() == tempTypeFight.getPlayers().size()) {
             typeFight = tempTypeFight;
             cacheService.saveSharedTypeFight(typeFight);
-            System.out.println("Ir a jugar!!");
-            msgt.convertAndSend(goToPlayString, true);
+            msgt.convertAndSend(GO_TO_PLAY, true);
         } else if (!typeFight.getGameReset() && typeFight.getGoToPlay() == typeFight.getPlayers().size()) {
-            System.out.println("Ir a jugar!!");
-            msgt.convertAndSend(goToPlayString, true);
+            msgt.convertAndSend(GO_TO_PLAY, true);
         }
     }
 

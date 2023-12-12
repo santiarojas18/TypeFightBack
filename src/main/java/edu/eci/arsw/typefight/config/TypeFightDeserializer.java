@@ -50,14 +50,14 @@ public class TypeFightDeserializer extends StdDeserializer<TypeFight> {
         JsonNode currentWordsNode = node.get("currentWords");
         ArrayList<String> currentWords = new ArrayList<>();
 
-        if (currentWordsNode != null && playersNode.isArray()) {
+        if (currentWordsNode != null && currentWordsNode.isArray()) {
             for (JsonNode currentWord : currentWordsNode) {
                 currentWords.add(currentWord.asText());
             }
         }
         JsonNode playerNamesNode = node.get("playerNames");
         ArrayList<String> playerNames = new ArrayList<>();
-        if (currentWordsNode != null && playersNode.isArray()) {
+        if (playerNamesNode != null && playerNamesNode.isArray()) {
             for (JsonNode playerName : playerNamesNode) {
                 playerNames.add(playerName.asText());
             }
