@@ -6,7 +6,6 @@ import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -59,20 +58,10 @@ public class TypeFight implements Serializable{
                 "Té", "Uña", "Vaso", "Whisky", "Xilografía", "Yoyo", "Zoológico", "Alabanza", "Beso", "Caramelo",
                 "Dibujo", "Estrella", "Flauta", "Guitarra", "Hada", "Iglesia", "Juguete", "Kilogramo", "Lobo", "Mar",
                 "Nido", "Océano", "Pantalón", "Quirófano", "Reloj", "Sapo", "Trenza", "Unicornio", "Vela", "Zapato"));
-        //players = new HashMap<>();
+
         colors = new String[] {"Rojo", "Amarillo", "Azul", "Verde", "Naranja"};
         this.random = new SecureRandom();
 
-        //Mock
-        //Player juan = new Player("Juan", "azul");
-        //juan.decreaseHealth(12);
-        //players.put("azul",juan);
-        //Player santiago = new Player("santiago", "verde");
-        //santiago.decreaseHealth(10);
-        //players.put("verde",santiago);
-        //Player daniel = new Player("daniel", "rojo");
-        //daniel.decreaseHealth(14);
-        //players.put("rojo",daniel);
     }
 
     public String getRandomWord(){
@@ -142,7 +131,7 @@ public class TypeFight implements Serializable{
         }
     }
 
-    public ArrayList<String> getPlayersNames() {
+    public List<String> getPlayersNames() {
         return playersNames;
     }
 

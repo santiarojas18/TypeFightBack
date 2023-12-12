@@ -177,16 +177,12 @@ public class STOMPMessagesHandler {
             }
 
         }
-        System.out.println("Jugadore agregados después de volver a meter al redis: " + typeFight.getPlayers());
-        System.out.println("type:" + typeFight);
         msgt.convertAndSend("/topic/newplayer." + uniqueId, isUsed);
 
     }
 
     @MessageMapping("newentry")
     public void handleNewEntry () {
-        System.out.println("Entrada registrada");
-        System.out.println("Jugadores del type: " + typeFight.getPlayers());
         if (typeFight.getGameReset()){
             tempTypeFight = cacheService.loadOrCreateTempTypeFight();
             msgt.convertAndSend(NEW_ENTRY, tempTypeFight.getPlayers());
@@ -204,7 +200,6 @@ public class STOMPMessagesHandler {
 
     @MessageMapping("gotoplay")
     public void handleGoToPlay () {
-        System.out.println("Jugador quiere jugar!!");
         tempTypeFight = cacheService.loadOrCreateTempTypeFight();
         typeFight = cacheService.loadOrCreateTypeFight();
 
@@ -213,9 +208,7 @@ public class STOMPMessagesHandler {
 
         cacheService.saveSharedTypeFight(typeFight);
         cacheService.saveSharedTempTypeFight(tempTypeFight);
-        
-        System.out.println(goToPlay);
-        System.out.println(gameReset);
+
         if (typeFight.getGameReset() && tempTypeFight.getGoToPlay() == tempTypeFight.getPlayers().size()) {
             typeFight = tempTypeFight;
             cacheService.saveSharedTypeFight(typeFight);
@@ -229,18 +222,15 @@ public class STOMPMessagesHandler {
     @MessageMapping("showWinner")
     public void handleShowWinner () {
         typeFight = cacheService.loadOrCreateTypeFight();
-        System.out.println("Ganador: " +  typeFight.getSortedPlayers().get(0));
         msgt.convertAndSend("/topic/showWinner", typeFight.getSortedPlayers());
     }
 
     @MessageMapping("playAgain")
     public void handlePlayAgain (String name) {
-        System.out.println("Jugador: " + name + " quiere jugar de nuevo!");
         if (!typeFight.getGameReset()) {
             typeFight.setGameReset(true);
             cacheService.saveSharedTypeFight(typeFight);
             tempTypeFight = new TypeFight();
-            System.out.println("Reiniciado");
         }
         Player player = new Player(name, tempTypeFight.getColorByPlayers());
         inGame = false;
@@ -252,7 +242,6 @@ public class STOMPMessagesHandler {
 
     @MessageMapping("newentrygame")
     public void handleNewEntryGame () {
-        System.out.println("Entrada registrada");
         typeFight = cacheService.loadOrCreateTypeFight();
         msgt.convertAndSend("/topic/newentrygame", typeFight.getPlayers());
     }

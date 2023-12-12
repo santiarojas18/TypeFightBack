@@ -2,25 +2,26 @@ package edu.eci.arsw.typefight.service;
 
 import edu.eci.arsw.typefight.model.TypeFight;
 import edu.eci.arsw.typefight.repository.TypeFightRepository;
-import edu.eci.arsw.typefight.config.RedisConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.io.Serializable;
 
 @Service
 public class CacheService {
-    @Autowired
-    TypeFightRepository typeFightRepository;
 
     private static final String TYPE_FIGHT_KEY = "sharedTypeFight";
     private static final String TEMP_TYPE_FIGHT_KEY = "sharedTempTypeFight";
 
+
+    private final RedisTemplate<String, TypeFight> redisTemplate;
+
     @Autowired
-    private RedisTemplate<String, TypeFight> redisTemplate;
+    public CacheService(RedisTemplate<String, TypeFight> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     @PostConstruct
     public TypeFight loadOrCreateTypeFight() {
