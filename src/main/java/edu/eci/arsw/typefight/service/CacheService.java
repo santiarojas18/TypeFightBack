@@ -1,7 +1,6 @@
 package edu.eci.arsw.typefight.service;
 
 import edu.eci.arsw.typefight.model.TypeFight;
-import edu.eci.arsw.typefight.repository.TypeFightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
