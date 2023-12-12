@@ -28,26 +28,39 @@ import java.util.Map;
 @Controller
 public class STOMPMessagesHandler {
 
-    @Autowired
-    SimpMessagingTemplate msgt;
 
-    @Autowired
-    PlayerService playerService;
+    private final SimpMessagingTemplate msgt;
 
-    @Autowired
-    private RedissonClient redissonClient;
 
-    @Lazy
-    @Autowired
-    CacheService cacheService;
+    private final PlayerService playerService;
+
+
+    private final RedissonClient redissonClient;
+
+    private final CacheService cacheService;
     
-    TypeFight typeFight, tempTypeFight;
+    TypeFight typeFight;
+    TypeFight tempTypeFight;
     int goToPlay;
     boolean gameReset;
 
     boolean inGame;
 
-    public STOMPMessagesHandler() {
+    private static final String newEntry = "/topic/newentry";
+    private static final String readyToPlay = "/topic/readytoplay";
+    private static final String goToPlayString = "/topic/gotoplay";
+
+    @Autowired
+    public STOMPMessagesHandler(SimpMessagingTemplate msgt,
+                                PlayerService playerService,
+                                RedissonClient redissonClient,
+                                @Lazy CacheService cacheService) {
+
+        this.msgt = msgt;
+        this.playerService = playerService;
+        this.redissonClient = redissonClient;
+        this.cacheService = cacheService;
+
         goToPlay = 0;
         gameReset = false;
         inGame = false;
@@ -56,7 +69,7 @@ public class STOMPMessagesHandler {
     @Scheduled(fixedRate = 1000)
     public void getInitialWord() {
         typeFight = cacheService.loadOrCreateTypeFight();
-        if(typeFight.getCurrentWords().size() < typeFight.MAX_CURRENT_WORDS){
+        if(typeFight.getCurrentWords().size() < TypeFight.MAX_CURRENT_WORDS){
             String currentWord = typeFight.getRandomWord(); // Obtén la palabra actual desde tu modelo TypeFight
             typeFight.addRandomWord(currentWord);
         }
@@ -65,15 +78,15 @@ public class STOMPMessagesHandler {
         msgt.convertAndSend("/topic/updateHealth", typeFight.getPlayers());
         if (typeFight.getGameReset()){
                 tempTypeFight = cacheService.loadOrCreateTempTypeFight();
-                msgt.convertAndSend("/topic/newentry", tempTypeFight.getPlayers());
+                msgt.convertAndSend(newEntry, tempTypeFight.getPlayers());
                 if (tempTypeFight.getAmountOfPlayers() >= 2) {
-                    msgt.convertAndSend("/topic/readytoplay", true);
+                    msgt.convertAndSend(readyToPlay, true);
                 }
         } else if (!typeFight.getGameReset()) {
                 typeFight = cacheService.loadOrCreateTypeFight();
-                msgt.convertAndSend("/topic/newentry", typeFight.getPlayers());
+                msgt.convertAndSend(newEntry, typeFight.getPlayers());
                 if (typeFight.getAmountOfPlayers() >= 2){
-                    msgt.convertAndSend("/topic/readytoplay", true);
+                    msgt.convertAndSend(readyToPlay, true);
                 }
         }
         for (Player player : typeFight.getPlayers()) {
@@ -89,10 +102,10 @@ public class STOMPMessagesHandler {
             typeFight = tempTypeFight;
             cacheService.saveSharedTypeFight(typeFight);
             System.out.println("Ir a jugar!!");
-            msgt.convertAndSend("/topic/gotoplay", true);
+            msgt.convertAndSend(goToPlayString, true);
         } else if (!typeFight.getGameReset() && typeFight.getGoToPlay() == typeFight.getPlayers().size()) {
             System.out.println("Ir a jugar!!");
-            msgt.convertAndSend("/topic/gotoplay", true);
+            msgt.convertAndSend(goToPlayString, true);
         }
     }
 
@@ -179,15 +192,15 @@ public class STOMPMessagesHandler {
         System.out.println("Jugadores del type: " + typeFight.getPlayers());
         if (typeFight.getGameReset()){
             tempTypeFight = cacheService.loadOrCreateTempTypeFight();
-            msgt.convertAndSend("/topic/newentry", tempTypeFight.getPlayers());
+            msgt.convertAndSend(newEntry, tempTypeFight.getPlayers());
             if (tempTypeFight.getAmountOfPlayers() >= 2) {
-                msgt.convertAndSend("/topic/readytoplay", true);
+                msgt.convertAndSend(readyToPlay, true);
             }
         } else if (!typeFight.getGameReset()) {
             typeFight = cacheService.loadOrCreateTypeFight();
-            msgt.convertAndSend("/topic/newentry", typeFight.getPlayers());
+            msgt.convertAndSend(newEntry, typeFight.getPlayers());
             if (typeFight.getAmountOfPlayers() >= 2){
-                msgt.convertAndSend("/topic/readytoplay", true);
+                msgt.convertAndSend(readyToPlay, true);
             }
         }
     }
@@ -210,10 +223,10 @@ public class STOMPMessagesHandler {
             typeFight = tempTypeFight;
             cacheService.saveSharedTypeFight(typeFight);
             System.out.println("Ir a jugar!!");
-            msgt.convertAndSend("/topic/gotoplay", true);
+            msgt.convertAndSend(goToPlayString, true);
         } else if (!typeFight.getGameReset() && typeFight.getGoToPlay() == typeFight.getPlayers().size()) {
             System.out.println("Ir a jugar!!");
-            msgt.convertAndSend("/topic/gotoplay", true);
+            msgt.convertAndSend(goToPlayString, true);
         }
     }
 
