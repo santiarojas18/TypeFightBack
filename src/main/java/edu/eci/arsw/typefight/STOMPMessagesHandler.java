@@ -4,7 +4,6 @@ import edu.eci.arsw.typefight.model.Player;
 import edu.eci.arsw.typefight.model.TypeFight;
 
 
-import edu.eci.arsw.typefight.service.PlayerService;
 import edu.eci.arsw.typefight.service.CacheService;
 
 import org.redisson.api.RLock;
@@ -32,9 +31,6 @@ public class STOMPMessagesHandler {
     private final SimpMessagingTemplate msgt;
 
 
-    private final PlayerService playerService;
-
-
     private final RedissonClient redissonClient;
 
     private final CacheService cacheService;
@@ -52,12 +48,10 @@ public class STOMPMessagesHandler {
 
     @Autowired
     public STOMPMessagesHandler(SimpMessagingTemplate msgt,
-                                PlayerService playerService,
                                 RedissonClient redissonClient,
                                 @Lazy CacheService cacheService) {
 
         this.msgt = msgt;
-        this.playerService = playerService;
         this.redissonClient = redissonClient;
         this.cacheService = cacheService;
 
@@ -158,7 +152,6 @@ public class STOMPMessagesHandler {
                     isUsed = false;
                     Player player = new Player(name, tempTypeFight.getColorByPlayers());
                     tempTypeFight.addPlayer(player);
-                    playerService.addPlayer(player);
                     cacheService.saveSharedTempTypeFight(tempTypeFight);
                 }
             }
@@ -170,7 +163,6 @@ public class STOMPMessagesHandler {
                 } else {
                     isUsed = false;
                     Player player = new Player(name, typeFight.getColorByPlayers());
-                    playerService.addPlayer(player);
                     typeFight.addPlayer(player);
                     cacheService.saveSharedTypeFight(typeFight);
                 }   
